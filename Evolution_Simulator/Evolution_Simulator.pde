@@ -269,6 +269,9 @@ void draw() {
       populationGraph.remove(0);
     }
     herbGraph.add((float)herbivorePopulation);
+    if(herbGraph.size()>500){
+      herbGraph.remove(0);
+    }
     eggGraph.add((float)eggs.size());
     if(eggGraph.size()>500){
       eggGraph.remove(0);
