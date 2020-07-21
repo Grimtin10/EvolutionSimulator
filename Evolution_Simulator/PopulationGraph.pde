@@ -23,7 +23,7 @@ public class PopulationGraph extends PApplet {
       float maxEgg=1;
       if(populationGraph.size()>0){
         maxEgg=Collections.max(eggGraph);
-        maxEgg=(maxEgg<112.5)?112.5:maxEgg;
+        maxEgg=(maxEgg<125)?125:maxEgg;
       }
       float maxHerb=1;
       if(herbGraph.size()>0){
