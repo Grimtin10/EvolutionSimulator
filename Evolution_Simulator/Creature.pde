@@ -125,9 +125,9 @@ class Creature {
       for(int i=0;i<newName.length();i++){
         if(random(0,1)<0.33333){
           if(i%2!=0){
-            name = replaceCharAt(name,i,vowels[round(random(vowels.length-1))]);
+            newName = replaceCharAt(name,i,vowels[round(random(vowels.length-1))]);
           } else {
-            name = replaceCharAt(name,i,consonants[round(random(consonants.length-1))]);
+            newName = replaceCharAt(name,i,consonants[round(random(consonants.length-1))]);
           }
         }
       }
@@ -141,8 +141,8 @@ class Creature {
       energy -= kidEnergy; 
       kids++;
     }
-    energy -= energyLoss*creatureSize/15; //TODO: Make speed affect this.
-    
+    energy -= energyLoss*creatureSize/15* movementSpeed / 1.75; 
+      
     //TODO: Clean this shit up! How? Idk man, it's just ugly.
     for(int i =0; i < eatenFood.size(); i++){
       eatenFood.get(i).x = x + random(-50, 50);
@@ -184,19 +184,18 @@ class Creature {
     }
   }
   
-  //TODO: This formatting sucks.
   public void render(){
     if(carnivoreParts >= carnivorePartsNeeded){
       carnivorePopulation++;
-    }else {
+    } else {
       herbivorePopulation++;
     }    
     if(selected){
       strokeWeight(5);
       stroke(0, 0, 255);
-    }else {
-    strokeWeight(2);
-    stroke(sfColor, sfColor, 255);
+    } else {
+      strokeWeight(2);
+      stroke(sfColor, sfColor, 255);
     }
     fill(lerpColor(color(255), color(255, 0, 0), map(carnivoreParts, 0, carnivorePartsNeeded, 0 ,1)));
     ellipse(x, y, creatureSize, creatureSize);
