@@ -29,10 +29,10 @@ public class HerbivoreGraph extends PApplet {
         maxEggTime=Collections.max(herbEggTimeGraph);
         maxEggTime=(maxSpeed<34)?34:maxEggTime;
       }
-      float maxKidEn=1;
+      float maxkidEnergy=1;
       if(herbSpeedGraph.size()>0){
-        maxKidEn=Collections.max(herbKidEnGraph);
-        maxKidEn=(maxSpeed<34)?34:maxKidEn;
+        maxkidEnergy=Collections.max(herbKidEnergyGraph);
+        maxkidEnergy=(maxSpeed<34)?34:maxkidEnergy;
       }
       float maxSize=1;
       if(herbSpeedGraph.size()>0){
@@ -45,7 +45,7 @@ public class HerbivoreGraph extends PApplet {
         maxEnergy=(maxSpeed<34)?34:maxEnergy;
       }
       //println(maxSpeed);
-      float maxVal=max(maxSpeed, maxKids, max(maxParts, maxEggTime, max(maxKidEn, maxSize, maxEnergy)));
+      float maxVal=max(maxSpeed, maxKids, max(maxParts, maxEggTime, max(maxkidEnergy, maxSize, maxEnergy)));
       stroke(255,0,0);
       for(int i=1;i<herbSpeedGraph.size();i++){
         line((i-1),height-((herbSpeedGraph.get(i-1))*(34/maxVal))*16,(i),height-((herbSpeedGraph.get(i))*(34/maxVal))*16);
@@ -63,8 +63,8 @@ public class HerbivoreGraph extends PApplet {
         line((i-1),height-((herbEggTimeGraph.get(i-1))*(34/maxVal))*16,(i),height-((herbEggTimeGraph.get(i))*(34/maxVal))*16);
       }
       stroke(255,0,255);
-      for(int i=1;i<herbKidEnGraph.size();i++){
-        line((i-1),height-((herbKidEnGraph.get(i-1))*(34/maxVal))*16,(i),height-((herbKidEnGraph.get(i))*(34/maxVal))*16);
+      for(int i=1;i<herbKidEnergyGraph.size();i++){
+        line((i-1),height-((herbKidEnergyGraph.get(i-1))*(34/maxVal))*16,(i),height-((herbKidEnergyGraph.get(i))*(34/maxVal))*16);
       }
       stroke(255,255,255);
       for(int i=1;i<herbSizeGraph.size();i++){
@@ -101,9 +101,9 @@ public class HerbivoreGraph extends PApplet {
           hover1 = "Value: " + herbEggTimeGraph.get(herbEggTimeGraph.size()-1);
           hover2 = "Meaning: Avg. Egg Time";
         }
-        if(abs(mouseY-(height-((herbKidEnGraph.get(herbKidEnGraph.size()-1))*(125/maxVal))*4))<25){
+        if(abs(mouseY-(height-((herbKidEnergyGraph.get(herbKidEnergyGraph.size()-1))*(125/maxVal))*4))<25){
           textSize(32);
-          hover1 = "Value: " + herbKidEnGraph.get(herbKidEnGraph.size()-1);
+          hover1 = "Value: " + herbKidEnergyGraph.get(herbKidEnergyGraph.size()-1);
           hover2 = "Meaning: Avg. Kid Energy";
         }
         if(abs(mouseY-(height-((herbSizeGraph.get(herbSizeGraph.size()-1))*(125/maxVal))*4))<25){
