@@ -256,7 +256,7 @@ void draw() {
   text("Food: " + (currentFood + currentSuperfood + currentPoison + currentSmartfood) + " (" + currentFood + "/" + currentSuperfood + "/" + currentPoison + "/" + currentSmartfood + ")" , 0, 96);
   text("FPS: " + frameRate, 0, 128);
   text("Mode: " + mode, 0, 160);
-  text("selectedMode: " + simulations, 0, 192);
+  text("Simulations: " + simulations, 0, 192);
   text("Simulation Time: " + "(" + minutes + ":" + ((seconds<10) ? "0" + seconds : seconds) + ")", 0, 224);
 
   if(!pause){
