@@ -64,7 +64,7 @@ char[] consonants = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p',
 char[] vowels = {'a', 'e', 'i','o', 'u'};
 
 void settings() {
-  size(1560, 878);
+  size(1820, 980);
   
   String[] args1 = {"Graph"};
   PopulationGraph sa1 = new PopulationGraph();
