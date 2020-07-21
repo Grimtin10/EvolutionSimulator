@@ -1,11 +1,32 @@
-int minPop = 30;
-int herbPop;
-int carnPop;
-int foodAmt = 2000;
-int currentFood = 1000; 
-int currentSuperfood = 84;
-int currentPoison = 50;
-int currentSmartfood = 500;
+/*
+Evolution simulator created by Grimtin10 and Supersizedman.
+This program is designed to simulate evolution on a simple scale,
+featuring many features that the organisms can evolve, such as
+speed, time it takes for eggs to hatch, size, and whether or not it is a carnivore.
+
+Copyright 2020, Grimtin10 and Supersizedman
+*/
+
+
+//These are the simulation variables, split into settings and then generic variables.
+
+//The starting population of the simulation.
+int startingPopulation = 30;
+
+//The population of the two species.
+int herbivorePopulation;
+int carnivorePopulation;
+
+//The starting food of the simulation.
+int startingFood = 2000;
+
+//The current amounts of each food.
+int currentFood; 
+int currentSuperfood;
+int currentPoison;
+int currentSmartfood;
+
+//The selected creature.
 int selectedCreature;
 int selectedEgg;
 int selectedSf;
@@ -42,6 +63,7 @@ ArrayList<Float> herbGraph = new ArrayList<Float>();
 ArrayList<Float> carnGraph = new ArrayList<Float>();
 ArrayList<Float> smartfoodColorGraph = new ArrayList<Float>();
 ArrayList<Float> sfColorGraph = new ArrayList<Float>();
+ArrayList<Float> eggGraph = new ArrayList<Float>();
 
 //Herbivore graphs
 ArrayList<Float> herbSpeedGraph = new ArrayList<Float>();
@@ -76,7 +98,7 @@ void settings() {
   CarnivoreGraph sa3 = new CarnivoreGraph();
   PApplet.runSketch(args3, sa3);
   
-  for(int i = 0; i < minPop; i++){
+  for(int i = 0; i < startingPopulation; i++){
     String name = "";
     for(int j = 0; j < round(random(2, 5)); j ++){
       int t = 0;
@@ -89,16 +111,16 @@ void settings() {
     }
     creatures.add(new Creature(1.75, 10, startEnergy, 10, 0, 0, width/2, height/2, 15, 64, name, ""));
   }
-  for(int i = 0; i < foodAmt; i++){
+  for(int i = 0; i < startingFood; i++){
     food.add(new Food(random(width), random(height)));
   }
-  for(int i = 0; i < foodAmt/10; i++){
+  for(int i = 0; i < startingFood/10; i++){
     superfood.add(new Superfood(random(width), random(height)));
   }
-  for(int i = 0; i < foodAmt/18; i++){
+  for(int i = 0; i < startingFood/18; i++){
     poison.add(new Poison(random(width), random(height)));
   }
-  for(int i = 0; i < foodAmt/12; i++){
+  for(int i = 0; i < startingFood/12; i++){
     smartfood.add(new Smartfood(random(width), random(height), 128));
   }
 }
@@ -111,8 +133,8 @@ void draw() {
   currentPoison = 0;
   currentSmartfood = 0;
   
-  herbPop = 0;
-  carnPop = 0;
+  herbivorePopulation = 0;
+  carnivorePopulation = 0;
   
   for(int i = 0; i < food.size(); i++){
     food.get(i).render();
@@ -194,7 +216,7 @@ void draw() {
   }
   fill(200, 200, 255);
   textSize(32);
-  text("Population: " + creatures.size() + " (" + herbPop + "/" + carnPop + ")", 0, 32);
+  text("Population: " + creatures.size() + " (" + herbivorePopulation + "/" + carnivorePopulation + ")", 0, 32);
   text("Eggs: " + eggs.size(), 0, 64); 
   text("Food: " + (currentFood + currentSuperfood + currentPoison + currentSmartfood) + " (" + currentFood + "/" + currentSuperfood + "/" + currentPoison + "/" + currentSmartfood + ")" , 0, 96);
   text("FPS: " + frameRate, 0, 128);
@@ -213,15 +235,23 @@ void draw() {
   }
   //println((round(frameRate)/8));
   if(!pause&&frameCount%(round(frameRate)/2)==0){
-    populationGraph.add((float)herbPop+carnPop);
+    populationGraph.add((float)herbivorePopulation+carnivorePopulation);
     if(populationGraph.size()>500){
       populationGraph.remove(0);
     }
+<<<<<<< HEAD
+    herbGraph.add((float)herbivorePopulation);
+=======
+    eggGraph.add((float)eggs.size());
+    if(eggGraph.size()>125){
+      eggGraph.remove(0);
+    }
     herbGraph.add((float)herbPop);
+>>>>>>> 0f44c18422d1dc35118fe69185c65e002230da2b
     if(herbGraph.size()>500){
       herbGraph.remove(0);
     }
-    carnGraph.add((float)carnPop);
+    carnGraph.add((float)carnivorePopulation);
     if(carnGraph.size()>500){
       carnGraph.remove(0);
     }
@@ -262,13 +292,13 @@ void draw() {
         avgCarnSpeed+=creatures.get(i).mSpeed;
       }
     }
-    avgHerbSpeed/=herbPop;
-    avgCarnSpeed/=carnPop;
+    avgHerbSpeed/=herbivorePopulation;
+    avgCarnSpeed/=carnivorePopulation;
     herbSpeedGraph.add(avgHerbSpeed);
     if(herbSpeedGraph.size()>500){
       herbSpeedGraph.remove(0);
     }
-    if(carnPop>0){
+    if(carnivorePopulation>0){
       carnSpeedGraph.add(avgCarnSpeed);
       if(carnSpeedGraph.size()>500){
         carnSpeedGraph.remove(0);
@@ -283,13 +313,13 @@ void draw() {
         avgCarnKids+=creatures.get(i).kids;
       }
     }
-    avgHerbKids/=herbPop;
-    avgCarnKids/=carnPop;
+    avgHerbKids/=herbivorePopulation;
+    avgCarnKids/=carnivorePopulation;
     herbKidsGraph.add(avgHerbKids);
     if(herbKidsGraph.size()>500){
       herbKidsGraph.remove(0);
     }
-    if(carnPop>0){
+    if(carnivorePopulation>0){
       carnKidsGraph.add(avgCarnKids);
       if(carnKidsGraph.size()>500){
         carnKidsGraph.remove(0);
@@ -301,7 +331,7 @@ void draw() {
         avgHerbSpeed+=creatures.get(i).carnivoreParts;
       }
     }
-    avgHerbParts/=herbPop;
+    avgHerbParts/=herbivorePopulation;
     herbPartsGraph.add(avgHerbParts);
     if(herbPartsGraph.size()>500){
       herbPartsGraph.remove(0);
@@ -315,13 +345,13 @@ void draw() {
         avgCarnEggTime+=creatures.get(i).eggTime;
       }
     }
-    avgHerbEggTime/=herbPop;
-    avgCarnEggTime/=carnPop;
+    avgHerbEggTime/=herbivorePopulation;
+    avgCarnEggTime/=carnivorePopulation;
     herbEggTimeGraph.add(avgHerbEggTime);
     if(herbEggTimeGraph.size()>500){
       herbEggTimeGraph.remove(0);
     }
-    if(carnPop>0){
+    if(carnivorePopulation>0){
       carnEggTimeGraph.add(avgCarnEggTime);
       if(carnEggTimeGraph.size()>500){
         carnEggTimeGraph.remove(0);
@@ -336,13 +366,13 @@ void draw() {
         avgCarnKidEn+=creatures.get(i).kidEn;
       }
     }
-    avgHerbKidEn/=herbPop;
-    avgCarnKidEn/=carnPop;
+    avgHerbKidEn/=herbivorePopulation;
+    avgCarnKidEn/=carnivorePopulation;
     herbKidEnGraph.add(avgHerbKidEn);
     if(herbKidEnGraph.size()>500){
       herbKidEnGraph.remove(0);
     }
-    if(carnPop>0){
+    if(carnivorePopulation>0){
       carnKidEnGraph.add(avgCarnKidEn);
       if(carnKidEnGraph.size()>500){
         carnKidEnGraph.remove(0);
@@ -357,13 +387,13 @@ void draw() {
         avgCarnSize+=creatures.get(i).cSize;
       }
     }
-    avgHerbSize/=herbPop;
-    avgCarnSize/=carnPop;
+    avgHerbSize/=herbivorePopulation;
+    avgCarnSize/=carnivorePopulation;
     herbSizeGraph.add(avgHerbSize);
     if(herbSizeGraph.size()>500){
       herbSizeGraph.remove(0);
     }
-    if(carnPop>0){
+    if(carnivorePopulation>0){
       carnSizeGraph.add(avgCarnSize);
       if(carnSizeGraph.size()>500){
         carnSizeGraph.remove(0);
@@ -378,13 +408,13 @@ void draw() {
         avgCarnEnergy+=creatures.get(i).energy;
       }
     }
-    avgHerbEnergy/=herbPop;
-    avgCarnEnergy/=carnPop;
+    avgHerbEnergy/=herbivorePopulation;
+    avgCarnEnergy/=carnivorePopulation;
     herbEnergyGraph.add(avgHerbEnergy);
     if(herbEnergyGraph.size()>500){
       herbEnergyGraph.remove(0);
     }
-    if(carnPop>0){
+    if(carnivorePopulation>0){
       carnEnergyGraph.add(avgCarnEnergy);
       if(carnEnergyGraph.size()>500){
         carnEnergyGraph.remove(0);
@@ -449,7 +479,7 @@ void keyPressed() {
     for(int i = 0; i < smartfood.size(); i++){
       smartfood.remove(i);
     }
-    for(int i = 0; i < minPop; i++){
+    for(int i = 0; i < startingPopulation; i++){
       String name = "";
       for(int j = 0; j < round(random(2, 5)); j ++){
         int t = 0;
@@ -462,16 +492,16 @@ void keyPressed() {
       }
       creatures.add(new Creature(1, 10, startEnergy, 10, 0, 0, width/2, height/2, 15, 64, name, ""));
     }
-    for(int i = 0; i < foodAmt; i++){
+    for(int i = 0; i < startingFood; i++){
       food.add(new Food(random(width), random(height)));
     }
-    for(int i = 0; i < foodAmt/12; i++){
+    for(int i = 0; i < startingFood/12; i++){
       superfood.add(new Superfood(random(width), random(height)));
     }
-    for(int i = 0; i < foodAmt/20; i++){
+    for(int i = 0; i < startingFood/20; i++){
       poison.add(new Poison(random(width), random(height)));
     }
-  for(int i = 0; i < foodAmt/8; i++){
+  for(int i = 0; i < startingFood/8; i++){
     smartfood.add(new Smartfood(random(width), random(height), 128));
     }
   }
