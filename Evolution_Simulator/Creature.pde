@@ -141,7 +141,7 @@ class Creature {
       energy -= kidEnergy; 
       kids++;
     }
-    energy -= energyLoss * creatureSize/15 + abs(movementSpeed / 1.75); 
+    energy -= energyLoss * creatureSize/15 + (abs(movementSpeed / 1.75)*energyLoss); 
       
     //TODO: Clean this shit up! How? Idk man, it's just ugly.
     for(int i =0; i < eatenFood.size(); i++){
