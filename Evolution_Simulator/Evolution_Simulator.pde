@@ -17,6 +17,9 @@ Copyright 2020, Grimtin10 and Supersizedman
 //The starting population of the simulation.
 int startingPopulation = 30;
 
+//The highest amount of creatures that can be in the simulation
+int populationLimit = 1000;
+
 //The population of the two species.
 int herbivorePopulation;
 int carnivorePopulation;
@@ -122,8 +125,10 @@ char[] consonants = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p',
 char[] vowels = {'a', 'e', 'i','o', 'u'};
 
 void settings() {
+  //Determines size of the main window.
   size(1820, 980);
   
+  //Loads in the graph windows;
   String[] args1 = {"Graph"};
   PopulationGraph sa1 = new PopulationGraph();
   PApplet.runSketch(args1, sa1);
@@ -134,6 +139,7 @@ void settings() {
   CarnivoreGraph sa3 = new CarnivoreGraph();
   PApplet.runSketch(args3, sa3);
   
+  //Adds in the creatures and determines their names.
   for(int i = 0; i < startingPopulation; i++){
     String name = "";
     for(int j = 0; j < round(random(2, 5)); j ++){
@@ -147,6 +153,8 @@ void settings() {
     }
     creatures.add(new Creature(1.75, 10, startEnergy, 10, 0, 0, width/2, height/2, 15, 64, name, ""));
   }
+  //Adds in different foods (to change how much food ends up in 
+  //the simulation change the startingfood).
   for(int i = 0; i < startingFood; i++){
     food.add(new Food(random(width), random(height)));
   }
@@ -162,16 +170,20 @@ void settings() {
 }
 
 void draw() {
+  //Determines color of the background.
   background(0);
   
+  //Sets the current amount of each food to 0.
   currentFood = 0;
   currentSuperfood = 0;
   currentPoison = 0;
   currentSmartfood = 0;
   
+  //Sets the herbivore and carnivore counters to 0.
   herbivorePopulation = 0;
   carnivorePopulation = 0;
   
+  //Runs rendering code so you can see food, eggs and creatures
   for(int i = 0; i < food.size(); i++){
     food.get(i).render();
   }
@@ -189,6 +201,7 @@ void draw() {
     eggs.get(i).render();
   }
   
+  //runs update and render code on the creatures
   for(int i = 0; i < creatures.size(); i++){
     if(!pause){
       creatures.get(i).update(i);
@@ -200,12 +213,14 @@ void draw() {
     }
   }
   
+  //Limits the population too the poulation limit
   int tempSize = creatures.size();
-  while(tempSize>1000){
+  while(tempSize>populationLimit){
     creatures.remove(round(random(creatures.size()-1)));
     tempSize--;
   }
   
+  //Applies selectedMode to a String variable: "mode"
   if(selectedMode == 0){
     mode = "Food Edit";
   }
@@ -222,6 +237,7 @@ void draw() {
     mode = "Energy Loss Edit";
   }
   
+  //Shows stats of the selected creature
   if(creatures.size() > 0 && selectedCreature < creatures.size() && creatures.get(selectedCreature) != null && creatureSelected){
     creatures.get(selectedCreature).selected = true;
     fill(255,120, 25);
@@ -241,16 +257,22 @@ void draw() {
     text("Name: " + creatures.get(selectedCreature).name, 0, 672);
     text("Parent Name: " + creatures.get(selectedCreature).parentName, 0, 704);
   }
+  
+  //Shows time until a selected egg hatches
   if(eggs.size() > 0 && selectedEgg < eggs.size() && eggs.get(selectedEgg) != null && eggSelected){
     eggs.get(selectedEgg).selected = true;
     fill(255,120, 25);
     text("Seconds until hatch: " + (eggs.get(selectedEgg).time-eggs.get(selectedEgg).age), 0, 256);
   }
+  
+  //Shows smartfood color of a specific selected smartfood
   if(smartfood.size() > 0 && selectedSmartFood < smartfood.size() && smartfood.get(selectedSmartFood) != null && sfSelected){
     smartfood.get(selectedSmartFood).selected = true;
     fill(255, 120, 25);
     text("Smartfood Color: " + (smartfood.get(selectedSmartFood).sfColor), 0, 256);
   }
+  
+  //shows basic stats
   fill(200, 200, 255);
   textSize(32);
   text("Population: " + creatures.size() + " (" + herbivorePopulation + "/" + carnivorePopulation + ")", 0, 32);
@@ -261,6 +283,7 @@ void draw() {
   text("Simulations: " + simulations, 0, 192);
   text("Simulation Time: " + "(" + hours + ":" + ((minutes<10) ? "0" + minutes : minutes) + ":" + ((seconds<10) ? "0" + seconds : seconds) + ")", 0, 224);
 
+  //Makes simulation time work
   if(!pause){
     if(frameCount % round(frameRate) == 0){
       seconds++;
