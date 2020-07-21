@@ -74,15 +74,19 @@ boolean ready = false;
 //TODO: Delete this variable, we already have a mode selected variable.
 String mode = "Food Edit";
 
-//Simulation arraylists
-ArrayList<Creature> creatures = new ArrayList<Creature>();
+//Simulation arraylists.
+ArrayList<Creature> creatures = new ArrayList<Creature>(); //The alive creatures.
+ArrayList<Egg> eggs = new ArrayList<Egg>(); //The creature's eggs.
+
+//The different types of food that are in the simulation.
 ArrayList<Food> food = new ArrayList<Food>();
-ArrayList<Egg> eggs = new ArrayList<Egg>();
 ArrayList<Superfood> superfood = new ArrayList<Superfood>();
 ArrayList<Poison> poison = new ArrayList<Poison>();
 ArrayList<Smartfood> smartfood = new ArrayList<Smartfood>();
 
-//Overall graphs
+//Graph arraylists.
+
+//The graphs that describe overall-population stats.
 ArrayList<Float> populationGraph = new ArrayList<Float>();
 ArrayList<Float> ageGraph = new ArrayList<Float>();
 ArrayList<Float> herbGraph = new ArrayList<Float>();
@@ -91,7 +95,7 @@ ArrayList<Float> smartfoodColorGraph = new ArrayList<Float>();
 ArrayList<Float> sfColorGraph = new ArrayList<Float>();
 ArrayList<Float> eggGraph = new ArrayList<Float>();
 
-//Herbivore graphs
+//The graphs that describe herbivore population stats.
 ArrayList<Float> herbSpeedGraph = new ArrayList<Float>();
 ArrayList<Float> herbKidsGraph = new ArrayList<Float>();
 ArrayList<Float> herbPartsGraph = new ArrayList<Float>();
@@ -100,7 +104,7 @@ ArrayList<Float> herbKidEnergyGraph = new ArrayList<Float>();
 ArrayList<Float> herbSizeGraph = new ArrayList<Float>();
 ArrayList<Float> herbEnergyGraph = new ArrayList<Float>();
 
-//Carnivore graphs
+//The graphs that describe carnivore population stats.
 ArrayList<Float> carnSpeedGraph = new ArrayList<Float>();
 ArrayList<Float> carnKidsGraph = new ArrayList<Float>();
 ArrayList<Float> carnEggTimeGraph = new ArrayList<Float>();
@@ -108,6 +112,7 @@ ArrayList<Float> carnKidEnergyGraph = new ArrayList<Float>();
 ArrayList<Float> carnSizeGraph = new ArrayList<Float>();
 ArrayList<Float> carnEnergyGraph = new ArrayList<Float>();
 
+//Arrays for name generation.
 char[] consonants = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z'};
 char[] vowels = {'a', 'e', 'i','o', 'u'};
 
@@ -384,7 +389,7 @@ void draw() {
     }
     avgHerbKidEnergy/=herbivorePopulation;
     avgCarnKidEnergy/=carnivorePopulation;
-    herbKidEnergyGraph.add(avgHerbKidEnergyergy);
+    herbKidEnergyGraph.add(avgHerbKidEnergy);
     if(herbKidEnergyGraph.size()>500){
       herbKidEnergyGraph.remove(0);
     }

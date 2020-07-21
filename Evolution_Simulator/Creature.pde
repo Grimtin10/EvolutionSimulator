@@ -130,7 +130,7 @@ class Creature {
             name = replaceCharAt(name,i,consonants[round(random(consonants.length-1))]);
           }
         }
-      
+      }
       newkidEnergy += random(-1, 1);
       if(random(0, 100) <= carnivoreMutationRate){
         newCarnivoreP += round(random(-1, 1));
