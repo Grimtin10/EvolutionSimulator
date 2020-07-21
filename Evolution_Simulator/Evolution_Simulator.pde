@@ -15,7 +15,7 @@ Copyright 2020, Grimtin10 and Supersizedman
 //These are the simulation variables, split into settings and then generic variables.
 
 //The starting population of the simulation.
-int startingPopulation = 1500;
+int startingPopulation = 30;
 
 //The population of the two species.
 int herbivorePopulation;
