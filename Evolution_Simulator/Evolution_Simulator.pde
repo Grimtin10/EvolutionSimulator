@@ -240,8 +240,11 @@ void draw() {
       populationGraph.remove(0);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     herbGraph.add((float)herbivorePopulation);
 =======
+=======
+>>>>>>> 0f44c18422d1dc35118fe69185c65e002230da2b
     eggGraph.add((float)eggs.size());
     if(eggGraph.size()>125){
       eggGraph.remove(0);
