@@ -1,5 +1,3 @@
-//penis
-
 int minPop = 30;
 int herbPop;
 int carnPop;
@@ -66,7 +64,7 @@ char[] consonants = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p',
 char[] vowels = {'a', 'e', 'i','o', 'u'};
 
 void settings() {
-  size(1920, 1015);
+  size(1560, 878);
   
   String[] args1 = {"Graph"};
   PopulationGraph sa1 = new PopulationGraph();
@@ -130,7 +128,7 @@ void draw() {
   }
   for(int i = 0; i < eggs.size(); i++){
     if(!pause){
-      eggs.get(i).update();
+      eggs.get(i).update(i);
     } 
   eggs.get(i).render();
   if(eggs.get(i).hatched){
