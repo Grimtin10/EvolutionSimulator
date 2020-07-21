@@ -199,8 +199,10 @@ void draw() {
     }
   }
   
-  while(creatures.size()>1000){
+  int tempSize = creatures.size();
+  while(tempSize>1000){
     creatures.remove(random(creatures.size()-1));
+    tempSize--;
   }
   
   if(selectedMode == 0){
