@@ -20,6 +20,11 @@ public class PopulationGraph extends PApplet {
         maxAge=Collections.max(ageGraph);
         maxAge=(maxAge<125)?125:maxAge;
       }
+      float maxEgg=1;
+      if(populationGraph.size()>0){
+        maxEgg=Collections.max(eggGraph);
+        maxEgg=(maxEgg<112.5)?112.5:maxEgg;
+      }
       float maxHerb=1;
       if(herbGraph.size()>0){
         maxHerb=Collections.max(herbGraph);
@@ -47,6 +52,10 @@ public class PopulationGraph extends PApplet {
       stroke(128);
       for(int i=1;i<ageGraph.size();i++){
         line((i-1),height-((ageGraph.get(i-1))*(125/maxVal))*4,(i),height-((ageGraph.get(i))*(125/maxVal))*4);
+      }
+      stroke(255, 0, 255);
+      for(int i=1;i<eggGraph.size();i++){
+        line((i-1)*4,height-((eggGraph.get(i-1))*(112.5/maxVal))*4,(i)*4,height-((eggGraph.get(i))*(112.5/maxVal))*4);
       }
       stroke(0,255,0);
       for(int i=1;i<herbGraph.size();i++){
@@ -100,6 +109,11 @@ public class PopulationGraph extends PApplet {
           textSize(27);
           hover1 = "Value: " + sfColorGraph.get(sfColorGraph.size()-1);
           hover2 = "Meaning: Average Prefered Smartfood";
+        }
+        if(abs(mouseY-(height-((eggGraph.get(eggGraph.size()-1))*(125/maxVal))*4))<25){
+          textSize(32);
+          hover1 = "Value: " + eggGraph.get(eggGraph.size()-1);
+          hover2 = "Meaning: Eggs";
         }
         if(hover1!=""){
           text(hover1, 0, height/2-16);

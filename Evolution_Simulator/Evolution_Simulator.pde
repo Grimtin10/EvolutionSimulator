@@ -44,6 +44,7 @@ ArrayList<Float> herbGraph = new ArrayList<Float>();
 ArrayList<Float> carnGraph = new ArrayList<Float>();
 ArrayList<Float> smartfoodColorGraph = new ArrayList<Float>();
 ArrayList<Float> sfColorGraph = new ArrayList<Float>();
+ArrayList<Float> eggGraph = new ArrayList<Float>();
 
 //Herbivore graphs
 ArrayList<Float> herbSpeedGraph = new ArrayList<Float>();
@@ -218,6 +219,10 @@ void draw() {
     populationGraph.add((float)herbPop+carnPop);
     if(populationGraph.size()>500){
       populationGraph.remove(0);
+    }
+    eggGraph.add((float)eggs.size());
+    if(eggGraph.size()>125){
+      eggGraph.remove(0);
     }
     herbGraph.add((float)herbPop);
     if(herbGraph.size()>500){
