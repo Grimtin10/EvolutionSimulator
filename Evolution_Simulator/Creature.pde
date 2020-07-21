@@ -125,12 +125,12 @@ class Creature {
       for(int i=0;i<newName.length();i++){
         if(random(0,1)<0.33333){
           if(i%2!=0){
-            name = replaceCharAt(name,i,vowels[round(random(vowels.length-1))]);
+            newName = replaceCharAt(name,i,vowels[round(random(vowels.length-1))]);
           } else {
-            name = replaceCharAt(name,i,consonants[round(random(consonants.length-1))]);
+            newName = replaceCharAt(name,i,consonants[round(random(consonants.length-1))]);
           }
         }
-      
+      }
       newkidEnergy += random(-1, 1);
       if(random(0, 100) <= carnivoreMutationRate){
         newCarnivoreP += round(random(-1, 1));
@@ -141,8 +141,8 @@ class Creature {
       energy -= kidEnergy; 
       kids++;
     }
-    energy -= energyLoss*creatureSize/15; //TODO: Make speed affect this.
-    
+    energy -= energyLoss*creatureSize/15* movementSpeed / 1.75; 
+      
     //TODO: Clean this shit up! How? Idk man, it's just ugly.
     for(int i =0; i < eatenFood.size(); i++){
       eatenFood.get(i).x = x + random(-50, 50);
@@ -181,7 +181,6 @@ class Creature {
     }
     if(creatureSize >= 26){
       creatureSize = 25;
-      }
     }
   }
   

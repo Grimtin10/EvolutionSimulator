@@ -388,7 +388,7 @@ void draw() {
     }
     avgHerbKidEnergy/=herbivorePopulation;
     avgCarnKidEnergy/=carnivorePopulation;
-    herbKidEnergyGraph.add(avgHerbKidEnergyergy);
+    herbKidEnergyGraph.add(avgHerbKidEnergy);
     if(herbKidEnergyGraph.size()>500){
       herbKidEnergyGraph.remove(0);
     }
