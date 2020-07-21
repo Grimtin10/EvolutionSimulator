@@ -268,8 +268,13 @@ void draw() {
     if(seconds == 60){
       minutes++;
       seconds = 0;
+      }
+    }  
+    if(minutes == 60){
+      hours++;
+      minutes = 0;
     }
-  }
+    
   if(!pause&&frameCount%(round(frameRate)/2)==0){
     populationGraph.add((float)herbivorePopulation+carnivorePopulation);
     if(populationGraph.size()>500){
@@ -503,49 +508,10 @@ void mouseClicked() {
 }
 
 void keyPressed() {
-  if(key == 'f'|| key == 'F'){
-    for(int i = 0; i < food.size(); i++){
-      food.remove(i);
-    }
-    for(int i = 0; i < superfood.size(); i++){
-      superfood.remove(i);
-    }
-    for(int i = 0; i < poison.size(); i++){
-      poison.remove(i);
-    }
-    for(int i = 0; i < eggs.size(); i++){
-      eggs.remove(i);
-    }
-    for(int i = 0; i < creatures.size(); i++){
-      creatures.remove(i);
-    }
-    for(int i = 0; i < smartfood.size(); i++){
-      smartfood.remove(i);
-    }
-    for(int i = 0; i < startingPopulation; i++){
-      String name = "";
-      for(int j = 0; j < round(random(2, 5)); j ++){
-        int t = 0;
-        name += consonants[round(random(0, 20))];
-        name += vowels[round(random(0, 4))];
-        if(random(0, 1) < 0.25 && t < 3){
-          t++;
-          name += vowels[round(random(0, 4))];
-        }
-      }
-      creatures.add(new Creature(1, 10, startEnergy, 10, 0, 0, width/2, height/2, 15, 64, name, ""));
-    }
-    for(int i = 0; i < startingFood; i++){
-      food.add(new Food(random(width), random(height)));
-    }
-    for(int i = 0; i < startingFood/12; i++){
-      superfood.add(new Superfood(random(width), random(height)));
-    }
-    for(int i = 0; i < startingFood/20; i++){
-      poison.add(new Poison(random(width), random(height)));
-    }
-  for(int i = 0; i < startingFood/8; i++){
-    smartfood.add(new Smartfood(random(width), random(height), 128));
+  if(creatureSelected){
+    if(keyCode == DELETE){
+      creatureSelected = false;
+      creatures.remove(selectedCreature);
     }
   }
   if(key == 'e' || key == 'E'){
