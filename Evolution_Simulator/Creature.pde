@@ -181,22 +181,22 @@ class Creature {
     }
     if(creatureSize >= 26){
       creatureSize = 25;
+      }
     }
   }
   
-  //TODO: This formatting sucks.
   public void render(){
     if(carnivoreParts >= carnivorePartsNeeded){
       carnivorePopulation++;
-    }else {
+    } else {
       herbivorePopulation++;
     }    
     if(selected){
       strokeWeight(5);
       stroke(0, 0, 255);
-    }else {
-    strokeWeight(2);
-    stroke(sfColor, sfColor, 255);
+    } else {
+      strokeWeight(2);
+      stroke(sfColor, sfColor, 255);
     }
     fill(lerpColor(color(255), color(255, 0, 0), map(carnivoreParts, 0, carnivorePartsNeeded, 0 ,1)));
     ellipse(x, y, creatureSize, creatureSize);
