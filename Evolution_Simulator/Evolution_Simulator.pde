@@ -199,6 +199,10 @@ void draw() {
     }
   }
   
+  while(creatures.size()>1000){
+    creatures.remove(random(creatures.size()-1));
+  }
+  
   if(selectedMode == 0){
     mode = "Food Edit";
   }
