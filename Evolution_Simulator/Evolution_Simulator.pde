@@ -15,7 +15,7 @@ Copyright 2020, Grimtin10 and Supersizedman
 //These are the simulation variables, split into settings and then generic variables.
 
 //The starting population of the simulation.
-int startingPopulation = 30;
+int startingPopulation = 1500;
 
 //The population of the two species.
 int herbivorePopulation;
@@ -202,7 +202,7 @@ void draw() {
   
   int tempSize = creatures.size();
   while(tempSize>1000){
-    creatures.remove(random(creatures.size()-1));
+    creatures.remove(round(random(creatures.size()-1)));
     tempSize--;
   }
   
