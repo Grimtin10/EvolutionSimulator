@@ -1,8 +1,12 @@
 /*
 Evolution simulator created by Grimtin10 and Supersizedman.
-This program is designed to simulate evolution on a simple scale,
-featuring many features that the organisms can evolve, such as
-speed, time it takes for eggs to hatch, size, and whether or not it is a carnivore.
+This program is designed to simulate evolution on a simple scale.
+There are many features we have worked on implementing, and
+more on the way. In this simulation you are equipped with 
+many ways to edit the simulation, and some extra features 
+to provide extra information, such as graphs with multiple 
+data points or the ability to select creatures, eggs, and 
+smartfood. 
 
 Copyright 2020, Grimtin10 and Supersizedman
 */
