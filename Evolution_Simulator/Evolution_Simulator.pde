@@ -44,6 +44,7 @@ int simulations = 0;
 //The time the simulation has been run.
 int seconds = 0;
 int minutes = 0;
+int hours = 0;
 
 //The mutation rate of a creatures carnivore parts.
 float carnivoreMutationRate = 50;
@@ -258,7 +259,7 @@ void draw() {
   text("FPS: " + frameRate, 0, 128);
   text("Mode: " + mode, 0, 160);
   text("Simulations: " + simulations, 0, 192);
-  text("Simulation Time: " + "(" + minutes + ":" + ((seconds<10) ? "0" + seconds : seconds) + ")", 0, 224);
+  text("Simulation Time: " + "(" + hours + ":" + ((minutes<10) ? "0" + minutes : minutes) + ((seconds<10) ? "0" + seconds : seconds) + ")", 0, 224);
 
   if(!pause){
     if(frameCount % round(frameRate) == 0){
