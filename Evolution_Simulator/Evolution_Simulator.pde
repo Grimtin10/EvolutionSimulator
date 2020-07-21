@@ -23,13 +23,13 @@ int startingFood = 2000;
 //The current amounts of each food.
 int currentFood; 
 int currentSuperfood;
-int currentPoison;
+int currentPoison; //Poison technically isnt a food, but it is classified as such.
 int currentSmartfood;
 
-//The selected creature.
+//The selected objects.
 int selectedCreature;
 int selectedEgg;
-int selectedSf;
+int selectedSmartFood;
 int modeNum = 0;
 int sims = 0;
 int secs = 0;
@@ -209,10 +209,10 @@ void draw() {
     fill(255,120, 25);
     text("Frames until hatch: " + (eggs.get(selectedEgg).time- frameCount), 0, 256);
   }
-  if(smartfood.size() > 0 && selectedSf < smartfood.size() && smartfood.get(selectedSf) != null && sfSelected){
-    smartfood.get(selectedSf).selected = true;
+  if(smartfood.size() > 0 && selectedSmartFood < smartfood.size() && smartfood.get(selectedSmartFood) != null && sfSelected){
+    smartfood.get(selectedSmartFood).selected = true;
     fill(255, 120, 25);
-    text("Smartfood Color: " + (smartfood.get(selectedSf).sfColor), 0, 256);
+    text("Smartfood Color: " + (smartfood.get(selectedSmartFood).sfColor), 0, 256);
   }
   fill(200, 200, 255);
   textSize(32);
@@ -233,26 +233,15 @@ void draw() {
       secs = 0;
     }
   }
-  //println((round(frameRate)/8));
   if(!pause&&frameCount%(round(frameRate)/2)==0){
     populationGraph.add((float)herbivorePopulation+carnivorePopulation);
     if(populationGraph.size()>500){
       populationGraph.remove(0);
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
     herbGraph.add((float)herbivorePopulation);
-=======
-=======
->>>>>>> 0f44c18422d1dc35118fe69185c65e002230da2b
     eggGraph.add((float)eggs.size());
     if(eggGraph.size()>125){
       eggGraph.remove(0);
-    }
-    herbGraph.add((float)herbPop);
->>>>>>> 0f44c18422d1dc35118fe69185c65e002230da2b
-    if(herbGraph.size()>500){
-      herbGraph.remove(0);
     }
     carnGraph.add((float)carnivorePopulation);
     if(carnGraph.size()>500){
@@ -455,9 +444,9 @@ void mouseClicked() {
   } 
   for(int i = 0; i < smartfood.size(); i++){
      if(dist(smartfood.get(i).x, smartfood.get(i).y, mouseX, mouseY)<7.5){
-       selectedSf = i;
+       selectedSmartFood = i;
        sfSelected = true;
-       smartfood.get(selectedSf).selected = true;
+       smartfood.get(selectedSmartFood).selected = true;
     }
   }
 }
