@@ -388,6 +388,8 @@ void draw() {
     float avgCarnKidEnergy=0;
     for(int i=0;i<creatures.size();i++){
       if(creatures.get(i).carnivoreParts < carnivorePartsNeeded){
+        avgHerbKidEnergy+=creatures.get(i).kidEnergy;
+      } else {
         avgCarnKidEnergy+=creatures.get(i).kidEnergy;
       }
     }
