@@ -183,14 +183,9 @@ void draw() {
   for(int i = 0; i < smartfood.size(); i++){
     smartfood.get(i).render();
   }
+  thread("updateEggs");
   for(int i = 0; i < eggs.size(); i++){
-    if(!pause){
-      eggs.get(i).update(i);
-    } 
-  eggs.get(i).render();
-  if(eggs.get(i).hatched){
-    eggs.remove(i);
-    }
+    eggs.get(i).render();
   }
   
   for(int i = 0; i < creatures.size(); i++){
@@ -242,7 +237,7 @@ void draw() {
   if(eggs.size() > 0 && selectedEgg < eggs.size() && eggs.get(selectedEgg) != null && eggSelected){
     eggs.get(selectedEgg).selected = true;
     fill(255,120, 25);
-    text("Frames until hatch: " + (eggs.get(selectedEgg).time- frameCount), 0, 256);
+    text("Seconds until hatch: " + (eggs.get(selectedEgg).time-eggs.get(selectedEgg).age), 0, 256);
   }
   if(smartfood.size() > 0 && selectedSmartFood < smartfood.size() && smartfood.get(selectedSmartFood) != null && sfSelected){
     smartfood.get(selectedSmartFood).selected = true;
@@ -449,6 +444,17 @@ void draw() {
     }
   }
   ready = true;
+}
+
+void updateEggs(){
+  for(int i = 0; i < eggs.size(); i++){
+    if(!pause){
+      eggs.get(i).update(i);
+    }
+    if(eggs.get(i).hatched){
+      eggs.remove(i);
+    }
+  }
 }
 
 String replaceCharAt(String s, int pos, char c) {

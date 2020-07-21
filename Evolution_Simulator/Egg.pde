@@ -2,6 +2,7 @@ class Egg {
   int carnivoreParts;
   int generation;
   int eggTime;
+  int age;
   int frames;
   float sfColor;
   float movementSpeed, kidEnergyergy, energy, time, x, y;
@@ -24,23 +25,27 @@ class Egg {
     this.x = x;
     this.y = y;
     this.creatureSize = creatureSize;
-    this.time = (time * frameRate) + frameCount;
+    this.time = time;
     this.sfColor = sfColor;
     this.name = name;
     this.parentName = parentName;
+    frames = 0;
     hatched = false;
   }
 
   void update(int id){
-    if(!pause){
-      frames++;
+    frames++;
+    if(frames % round(frameRate) == 0){
+      age++;
     }
-    if(frames >= time){
-      hatched = true;
-      creatures.add(new Creature(movementSpeed + random(-mutationAmount, mutationAmount), kidEnergyergy, energy, eggTime, carnivoreParts, generation + 1, x, y, creatureSize + random(-5, 5), sfColor, name, parentName));    
+    if(age >= time){
       if(id<selectedEgg){
         selectedEgg--;
+      } else if(id==0){
+        eggSelected = false;
       }
+      hatched = true;
+      creatures.add(new Creature(movementSpeed + random(-mutationAmount, mutationAmount), kidEnergyergy, energy, eggTime, carnivoreParts, generation + 1, x, y, creatureSize + random(-5, 5), sfColor, name, parentName));    
     }
   }
  
