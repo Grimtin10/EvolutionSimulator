@@ -24,10 +24,10 @@ public class CarnivoreGraph extends PApplet {
         maxEggTime=Collections.max(carnEggTimeGraph);
         maxEggTime=(maxSpeed<34)?34:maxEggTime;
       }
-      float maxKidEn=1;
+      float maxkidEnergy=1;
       if(carnSpeedGraph.size()>0){
-        maxKidEn=Collections.max(carnKidEnGraph);
-        maxKidEn=(maxSpeed<34)?34:maxKidEn;
+        maxkidEnergy=Collections.max(carnKidEnergyGraph);
+        maxkidEnergy=(maxSpeed<34)?34:maxkidEnergy;
       }
       float maxSize=1;
       if(carnSpeedGraph.size()>0){
@@ -40,7 +40,7 @@ public class CarnivoreGraph extends PApplet {
         maxEnergy=(maxSpeed<34)?34:maxEnergy;
       }
       //println(maxSpeed);
-      float maxVal=max(maxSpeed, maxKids, max(maxEggTime, max(maxKidEn, maxSize, maxEnergy)));
+      float maxVal=max(maxSpeed, maxKids, max(maxEggTime, max(maxkidEnergy, maxSize, maxEnergy)));
       stroke(255,0,0);
       for(int i=1;i<carnSpeedGraph.size();i++){
         line((i-1),height-((carnSpeedGraph.get(i-1))*(34/maxVal))*16,(i),height-((carnSpeedGraph.get(i))*(34/maxVal))*16);
@@ -54,8 +54,8 @@ public class CarnivoreGraph extends PApplet {
         line((i-1),height-((carnEggTimeGraph.get(i-1))*(34/maxVal))*16,(i),height-((carnEggTimeGraph.get(i))*(34/maxVal))*16);
       }
       stroke(255,255,0);
-      for(int i=1;i<carnKidEnGraph.size();i++){
-        line((i-1),height-((carnKidEnGraph.get(i-1))*(34/maxVal))*16,(i),height-((carnKidEnGraph.get(i))*(34/maxVal))*16);
+      for(int i=1;i<carnKidEnergyGraph.size();i++){
+        line((i-1),height-((carnKidEnergyGraph.get(i-1))*(34/maxVal))*16,(i),height-((carnKidEnergyGraph.get(i))*(34/maxVal))*16);
       }
       stroke(255,0,255);
       for(int i=1;i<carnSizeGraph.size();i++){
@@ -87,9 +87,9 @@ public class CarnivoreGraph extends PApplet {
           hover1 = "Value: " + carnEggTimeGraph.get(carnEggTimeGraph.size()-1);
           hover2 = "Meaning: Avg. Egg Time";
         }
-        if(abs(mouseY-(height-((carnKidEnGraph.get(carnKidEnGraph.size()-1))*(125/maxVal))*4))<25){
+        if(abs(mouseY-(height-((carnKidEnergyGraph.get(carnKidEnergyGraph.size()-1))*(125/maxVal))*4))<25){
           textSize(32);
-          hover1 = "Value: " + carnKidEnGraph.get(carnKidEnGraph.size()-1);
+          hover1 = "Value: " + carnKidEnergyGraph.get(carnKidEnergyGraph.size()-1);
           hover2 = "Meaning: Avg. Kid Energy";
         }
         if(abs(mouseY-(height-((carnSizeGraph.get(carnSizeGraph.size()-1))*(125/maxVal))*4))<25){

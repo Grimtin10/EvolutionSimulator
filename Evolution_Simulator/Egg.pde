@@ -4,8 +4,8 @@ class Egg {
   int eggTime;
   int frames;
   float sfColor;
-  float mSpeed, kidEn, energy, time, x, y;
-  float cSize;
+  float movementSpeed, kidEnergyergy, energy, time, x, y;
+  float creatureSize;
   String name;
   String parentName;
   
@@ -13,16 +13,17 @@ class Egg {
   boolean selected = false;
   
 
-  public Egg(float mSpeed, float kidEn, float energy, float time, int eggTime, int carnivoreParts, int generation, float x, float y, float cSize, float sfColor, String name, String parentName){
-    this.mSpeed = mSpeed;
-    this.kidEn = kidEn;
+  public Egg(float movementSpeed, float kidEnergyergy, float energy, float time, int eggTime, int carnivoreParts,
+  int generation, float x, float y, float creatureSize, float sfColor, String name, String parentName){
+    this.movementSpeed = movementSpeed;
+    this.kidEnergyergy = kidEnergyergy;
     this.energy = energy;
     this.carnivoreParts = carnivoreParts;
     this.generation = generation;
     this.eggTime = eggTime;
     this.x = x;
     this.y = y;
-    this.cSize = cSize;
+    this.creatureSize = creatureSize;
     this.time = (time * frameRate) + frameCount;
     this.sfColor = sfColor;
     this.name = name;
@@ -36,7 +37,7 @@ class Egg {
     }
     if(frames >= time){
       hatched = true;
-      creatures.add(new Creature(mSpeed + random(-mutationAmount, mutationAmount), kidEn, energy, eggTime, carnivoreParts, generation + 1, x, y, cSize + random(-5, 5), sfColor, name, parentName));    
+      creatures.add(new Creature(movementSpeed + random(-mutationAmount, mutationAmount), kidEnergyergy, energy, eggTime, carnivoreParts, generation + 1, x, y, creatureSize + random(-5, 5), sfColor, name, parentName));    
       if(id<selectedEgg){
         selectedEgg--;
       }
