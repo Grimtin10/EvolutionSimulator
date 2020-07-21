@@ -25,31 +25,57 @@ int carnivorePopulation;
 int startingFood = 2000;
 
 //The current amounts of each food.
-int currentFood; 
-int currentSuperfood;
+int currentFood; //Regular food, provides "foodEnergyAmount" amount of energy to the creatures that eat it.
+int currentSuperfood; //Superfood gives 10x the regular food amount.
 int currentPoison; //Poison technically isnt a food, but it is classified as such.
-int currentSmartfood;
+int currentSmartfood; //Smartfood is a food that can evolve, having a color that the creatures can have a preference towards.
 
 //The selected objects.
 int selectedCreature;
 int selectedEgg;
 int selectedSmartFood;
-int modeNum = 0;
-int sims = 0;
-int secs = 0;
-int mins = 0;
-float carnivoreMutation = 50;
-float carnivoreNeeded = 4;
+
+//The selected mode of editing.
+int selectedMode = 0;
+
+//The amount of selectedMode, goes up when everything goes extinct.
+int simulations = 0;
+
+//The time the simulation has been run.
+int seconds = 0;
+int minutes = 0;
+
+//The mutation rate of a creatures carnivore parts.
+float carnivoreMutationRate = 50;
+float carnivorePartsNeeded = 4;
+
+//The amount of energy creatures lose each frame.
 float energyLoss = 0.01;
+
+//The minumum starting energy for creatures.
 float startEnergy = 5;
+
+//The amount of energy food gives.
 float foodEnergyAmt = 1;
-float mutationAmount = 1;
+
+//Mutation settings.
+float mutationAmount = 1; //Default mutation amount.
+
+//Are things selected?
 boolean creatureSelected = false;
 boolean eggSelected = false;
 boolean sfSelected = false;
+
+//Is the simulation paused?
 boolean pause = false;
+
+//Render eaten food?
 boolean renderEaten = false;
+
+//Are the graphs ready to render? (Created due to multi-threading.)
 boolean ready = false;
+
+//TODO: Delete this variable, we already have a mode selected variable.
 String mode = "Food Edit";
 
 //Simulation arraylists
@@ -173,19 +199,19 @@ void draw() {
     }
   }
   
-  if(modeNum == 0){
+  if(selectedMode == 0){
     mode = "Food Edit";
   }
-  if(modeNum == 1){
+  if(selectedMode == 1){
     mode = "Food Energy Edit";
   }
-  if(modeNum == 2){
+  if(selectedMode == 2){
     mode = "Start Energy Edit";
   }
-  if(modeNum == 3){
+  if(selectedMode == 3){
     mode = "Carnivore Needed Edit";
   }
-  if(modeNum == 4){
+  if(selectedMode == 4){
     mode = "Energy Loss Edit";
   }
   
@@ -199,7 +225,7 @@ void draw() {
     text("Kid Energy: " + creatures.get(selectedCreature).kidEnergy + " + " + startEnergy, 0, 384);
     text("Egg Hatch Time: " + creatures.get(selectedCreature).eggTime, 0, 416);
     text("Kids Had: " + creatures.get(selectedCreature).kids, 0, 448);
-    text("Carnivore Parts Need: " + carnivoreNeeded, 0, 480);
+    text("Carnivore Parts Need: " + carnivorePartsNeeded, 0, 480);
     text("Carnivore Parts: " + creatures.get(selectedCreature).carnivoreParts, 0, 512);
     text("Food Energy Amount: " + foodEnergyAmt, 0, 544);
     text("Creature Size: " + creatures.get(selectedCreature).creatureSize, 0, 576);
@@ -225,16 +251,16 @@ void draw() {
   text("Food: " + (currentFood + currentSuperfood + currentPoison + currentSmartfood) + " (" + currentFood + "/" + currentSuperfood + "/" + currentPoison + "/" + currentSmartfood + ")" , 0, 96);
   text("FPS: " + frameRate, 0, 128);
   text("Mode: " + mode, 0, 160);
-  text("Simulations: " + sims, 0, 192);
-  text("Simulation Time: " + "(" + mins + ":" + ((secs<10) ? "0" + secs : secs) + ")", 0, 224);
+  text("selectedMode: " + simulations, 0, 192);
+  text("Simulation Time: " + "(" + minutes + ":" + ((seconds<10) ? "0" + seconds : seconds) + ")", 0, 224);
 
   if(!pause){
     if(frameCount % round(frameRate) == 0){
-      secs++;
+      seconds++;
     }  
-    if(secs == 60){
-      mins++;
-      secs = 0;
+    if(seconds == 60){
+      minutes++;
+      seconds = 0;
     }
   }
   if(!pause&&frameCount%(round(frameRate)/2)==0){
@@ -282,7 +308,7 @@ void draw() {
     float avgHerbSpeed=0;
     float avgCarnSpeed=0;
     for(int i=0;i<creatures.size();i++){
-      if(creatures.get(i).carnivoreParts < carnivoreNeeded){
+      if(creatures.get(i).carnivoreParts < carnivorePartsNeeded){
         avgHerbSpeed+=creatures.get(i).movementSpeed;
       } else {
         avgCarnSpeed+=creatures.get(i).movementSpeed;
@@ -303,7 +329,7 @@ void draw() {
     float avgHerbKids=0;
     float avgCarnKids=0;
     for(int i=0;i<creatures.size();i++){
-      if(creatures.get(i).carnivoreParts < carnivoreNeeded){
+      if(creatures.get(i).carnivoreParts < carnivorePartsNeeded){
         avgHerbKids+=creatures.get(i).kids;
       } else {
         avgCarnKids+=creatures.get(i).kids;
@@ -323,7 +349,7 @@ void draw() {
     }
     float avgHerbParts=0;
     for(int i=0;i<creatures.size();i++){
-      if(creatures.get(i).carnivoreParts < carnivoreNeeded){
+      if(creatures.get(i).carnivoreParts < carnivorePartsNeeded){
         avgHerbSpeed+=creatures.get(i).carnivoreParts;
       }
     }
@@ -335,7 +361,7 @@ void draw() {
     float avgHerbEggTime=0;
     float avgCarnEggTime=0;
     for(int i=0;i<creatures.size();i++){
-      if(creatures.get(i).carnivoreParts < carnivoreNeeded){
+      if(creatures.get(i).carnivoreParts < carnivorePartsNeeded){
         avgHerbEggTime+=creatures.get(i).eggTime;
       } else {
         avgCarnEggTime+=creatures.get(i).eggTime;
@@ -356,15 +382,13 @@ void draw() {
     float avgHerbKidEnergy=0;
     float avgCarnKidEnergy=0;
     for(int i=0;i<creatures.size();i++){
-      if(creatures.get(i).carnivoreParts < carnivoreNeeded){
-        avgHerbKidEnergy+=creatures.get(i).kidEnergy;
-      } else {
+      if(creatures.get(i).carnivoreParts < carnivorePartsNeeded){
         avgCarnKidEnergy+=creatures.get(i).kidEnergy;
       }
     }
     avgHerbKidEnergy/=herbivorePopulation;
     avgCarnKidEnergy/=carnivorePopulation;
-    herbKidEnergyGraph.add(avgHerbKidEnergy);
+    herbKidEnergyGraph.add(avgHerbKidEnergyergy);
     if(herbKidEnergyGraph.size()>500){
       herbKidEnergyGraph.remove(0);
     }
@@ -377,7 +401,7 @@ void draw() {
     float avgHerbSize=0;
     float avgCarnSize=0;
     for(int i=0;i<creatures.size();i++){
-      if(creatures.get(i).carnivoreParts < carnivoreNeeded){
+      if(creatures.get(i).carnivoreParts < carnivorePartsNeeded){
         avgHerbSize+=creatures.get(i).creatureSize;
       } else {
         avgCarnSize+=creatures.get(i).creatureSize;
@@ -398,7 +422,7 @@ void draw() {
     float avgHerbEnergy=0;
     float avgCarnEnergy=0;
     for(int i=0;i<creatures.size();i++){
-      if(creatures.get(i).carnivoreParts < carnivoreNeeded){
+      if(creatures.get(i).carnivoreParts < carnivorePartsNeeded){
         avgHerbEnergy+=creatures.get(i).energy;
       } else {
         avgCarnEnergy+=creatures.get(i).energy;
@@ -502,9 +526,9 @@ void keyPressed() {
     }
   }
   if(key == 'e' || key == 'E'){
-    modeNum++;
-    if(modeNum == 5){
-      modeNum = 0;    
+    selectedMode++;
+    if(selectedMode == 5){
+      selectedMode = 0;    
     }
   }
   if(key =='r' || key == 'R'){
@@ -555,10 +579,10 @@ void keyPressed() {
   }
   if(mode == "Carnivore Needed Edit"){
     if(key == 'w'|| key == 'W'){
-      carnivoreNeeded++;
+      carnivorePartsNeeded++;
     }
-    if((key == 's'|| key == 'S')&& carnivoreNeeded > 0) {
-      carnivoreNeeded--;
+    if((key == 's'|| key == 'S')&& carnivorePartsNeeded > 0) {
+      carnivorePartsNeeded--;
     }
   }
   if(mode == "Energy Loss Edit"){

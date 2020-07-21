@@ -45,9 +45,11 @@ class Creature {
     if(frameCount % round(frameRate) == 0){
       age++;
     }
-     
     if(x == creatureSize/2) {r += random(140, 180);} if(y == creatureSize/2) {r += random(140, 180);} if(x == width - creatureSize + creatureSize/2) {r += random(140, 180);} if(y == height - creatureSize + creatureSize/2) {r += random(140, 180);}
-    if(carnivoreParts < carnivoreNeeded){
+    
+    //TODO: This shit is inefficient! Add optimization.
+    if(carnivoreParts < carnivorePartsNeeded){
+    if(x == creatureSize/2) {r += random(140, 180);} if(y == creatureSize/2) {r += random(140, 180);} if(x == width - creatureSize + creatureSize/2) {r += random(140, 180);} if(y == height - creatureSize + creatureSize/2) {r += random(140, 180);}
       for(int i = 0; i < smartfood.size(); i++){
         float r = random(0,1);
         if(!smartfood.get(i).eaten && r > map(abs(sfColor-smartfood.get(i).sfColor), 0, 255, 0, 1) && dist(x, y, smartfood.get(i).x, smartfood.get(i).y) < creatureSize/2+7.5){
@@ -105,7 +107,7 @@ class Creature {
     } else {
       for(int i = 0; i < creatures.size(); i++){
         if(dist(x, y, creatures.get(i).x, creatures.get(i).y) < creatureSize/2+creatures.get(i).creatureSize && (x != creatures.get(i).x && y != creatures.get(i).y)){
-          if(creatures.get(i).carnivoreParts < carnivoreNeeded && random(0,1) > map(creatures.get(i).carnivoreParts, 0, carnivoreNeeded, 0, 1)){
+          if(creatures.get(i).carnivoreParts < carnivorePartsNeeded && random(0,1) > map(creatures.get(i).carnivoreParts, 0, carnivorePartsNeeded, 0, 1)){
             creatures.get(i).energy = 0;
             energy += foodEnergyAmt;
             r += random(-45, 45);
@@ -114,6 +116,7 @@ class Creature {
         }
       }
     }
+    //TODO: Add mutation rate settings instead of constants.
     if(energy >= kidEnergy + startEnergy) {
       int newCarnivoreP = carnivoreParts;
       float newkidEnergy = kidEnergy;
@@ -127,9 +130,9 @@ class Creature {
             name = replaceCharAt(name,i,consonants[round(random(consonants.length-1))]);
           }
         }
-      }
+      
       newkidEnergy += random(-1, 1);
-      if(random(0, 100) <= carnivoreMutation){
+      if(random(0, 100) <= carnivoreMutationRate){
         newCarnivoreP += round(random(-1, 1));
       }
       newSfColor += random(-32, 32);
@@ -138,7 +141,9 @@ class Creature {
       energy -= kidEnergy; 
       kids++;
     }
-    energy -= energyLoss*creatureSize/15;
+    energy -= energyLoss*creatureSize/15; //TODO: Make speed affect this.
+    
+    //TODO: Clean this shit up! How? Idk man, it's just ugly.
     for(int i =0; i < eatenFood.size(); i++){
       eatenFood.get(i).x = x + random(-50, 50);
       eatenFood.get(i).y = y + random(-50, 50);
@@ -178,8 +183,10 @@ class Creature {
       creatureSize = 25;
     }
   }
+  
+  //TODO: This formatting sucks.
   public void render(){
-    if(carnivoreParts >= carnivoreNeeded){
+    if(carnivoreParts >= carnivorePartsNeeded){
       carnivorePopulation++;
     }else {
       herbivorePopulation++;
@@ -191,7 +198,7 @@ class Creature {
     strokeWeight(2);
     stroke(sfColor, sfColor, 255);
     }
-    fill(lerpColor(color(255), color(255, 0, 0), map(carnivoreParts, 0, carnivoreNeeded, 0 ,1)));
+    fill(lerpColor(color(255), color(255, 0, 0), map(carnivoreParts, 0, carnivorePartsNeeded, 0 ,1)));
     ellipse(x, y, creatureSize, creatureSize);
   }
 }
