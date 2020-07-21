@@ -130,7 +130,7 @@ void draw() {
   }
   for(int i = 0; i < eggs.size(); i++){
     if(!pause){
-      eggs.get(i).update();
+      eggs.get(i).update(i);
     } 
   eggs.get(i).render();
   if(eggs.get(i).hatched){
