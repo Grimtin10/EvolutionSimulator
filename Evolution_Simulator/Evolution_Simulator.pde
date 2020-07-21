@@ -1,3 +1,5 @@
+//penis
+
 int minPop = 30;
 int herbPop;
 int carnPop;
