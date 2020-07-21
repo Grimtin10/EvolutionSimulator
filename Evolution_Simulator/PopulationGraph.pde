@@ -21,9 +21,9 @@ public class PopulationGraph extends PApplet {
         maxAge=(maxAge<125)?125:maxAge;
       }
       float maxEgg=1;
-      if(populationGraph.size()>0){
+      if(eggGraph.size()>0){
         maxEgg=Collections.max(eggGraph);
-        maxEgg=(maxEgg<112.5)?112.5:maxEgg;
+        maxEgg=(maxEgg<125)?125:maxEgg;
       }
       float maxHerb=1;
       if(herbGraph.size()>0){
@@ -55,7 +55,7 @@ public class PopulationGraph extends PApplet {
       }
       stroke(255, 0, 255);
       for(int i=1;i<eggGraph.size();i++){
-        line((i-1)*4,height-((eggGraph.get(i-1))*(112.5/maxVal))*4,(i)*4,height-((eggGraph.get(i))*(112.5/maxVal))*4);
+        line((i-1),height-((eggGraph.get(i-1))*(112.5/maxVal))*4,(i),height-((eggGraph.get(i))*(112.5/maxVal))*4);
       }
       stroke(0,255,0);
       for(int i=1;i<herbGraph.size();i++){
