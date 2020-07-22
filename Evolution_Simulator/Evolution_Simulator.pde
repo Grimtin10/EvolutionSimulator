@@ -26,13 +26,17 @@ int carnivorePopulation;
 
 //The starting food of the simulation.
 int startingFood = 2000;
+int startingSuperfood = 500;
+int startingPoison = 125;
+int startingSmartfood = 125;
+int startingLightningfood = 125;
 
 //The current amounts of each food.
 int currentFood; //Regular food, provides "foodEnergyAmount" amount of energy to the creatures that eat it.
-int currentSuperfood; //Superfood gives 10x the regular food amount.
+int currentSuperfood; //Superfood gives 5x the regular food amount.
 int currentPoison; //Poison technically isnt a food, but it is classified as such.
 int currentSmartfood;//Smartfood is a food that can evolve, having a color that the creatures can have a preference towards.
-int currentLightningfood;//Lightningfood gives a temporary speed boost;
+int currentLightningfood;//Lightningfood gives a temporary speed boost to the creature that consumes it.
 
 //The selected objects.
 int selectedCreature;
@@ -63,6 +67,9 @@ float startEnergy = 5;
 
 //The amount of energy food gives.
 float foodEnergyAmt = 1;
+float superfoodEnergyAmt = 5;
+float poisonEnergyAmt = 3;
+float lightningfoodEnergyAmt = 0.5;
 
 //Mutation settings.
 float mutationAmount = 1; //Default mutation amount.
@@ -93,9 +100,9 @@ ArrayList<Food> food = new ArrayList<Food>();
 ArrayList<Superfood> superfood = new ArrayList<Superfood>();
 ArrayList<Poison> poison = new ArrayList<Poison>();
 ArrayList<Smartfood> smartfood = new ArrayList<Smartfood>();
+ArrayList<Lightningfood> lightningfood = new ArrayList<Lightningfood>();
 
 //Graph arraylists.
-
 //The graphs that describe overall-population stats.
 ArrayList<Float> populationGraph = new ArrayList<Float>();
 ArrayList<Float> ageGraph = new ArrayList<Float>();
@@ -159,14 +166,17 @@ void settings() {
   for(int i = 0; i < startingFood; i++){
     food.add(new Food(random(width), random(height)));
   }
-  for(int i = 0; i < startingFood/10; i++){
+  for(int i = 0; i < startingSuperfood; i++){
     superfood.add(new Superfood(random(width), random(height)));
   }
-  for(int i = 0; i < startingFood/18; i++){
+  for(int i = 0; i < startingPoison; i++){
     poison.add(new Poison(random(width), random(height)));
   }
-  for(int i = 0; i < startingFood/12; i++){
+  for(int i = 0; i < startingSmartfood; i++){
     smartfood.add(new Smartfood(random(width), random(height), 128));
+  }
+  for(int i = 0; i < startingLightningfood; i++){
+    lightningfood.add(new Lightningfood(random(width), random(height)));
   }
 }
 
@@ -179,6 +189,7 @@ void draw() {
   currentSuperfood = 0;
   currentPoison = 0;
   currentSmartfood = 0;
+  currentLightningfood = 0;
   
   //Sets the herbivore and carnivore counters to 0.
   herbivorePopulation = 0;
@@ -196,6 +207,9 @@ void draw() {
   }
   for(int i = 0; i < smartfood.size(); i++){
     smartfood.get(i).render();
+  }
+  for(int i = 0; i < lightningfood.size(); i++){
+    lightningfood.get(i).render();
   }
   thread("updateEggs");
   for(int i = 0; i < eggs.size(); i++){
@@ -324,7 +338,7 @@ void draw() {
   textSize(32);
   text("Population: " + creatures.size() + " (" + herbivorePopulation + "/" + carnivorePopulation + ")", 0, 32);
   text("Eggs: " + eggs.size(), 0, 64); 
-  text("Food: " + (currentFood + currentSuperfood + currentPoison + currentSmartfood) + " (" + currentFood + "/" + currentSuperfood + "/" + currentPoison + "/" + currentSmartfood + ")" , 0, 96);
+  text("Food: " + (currentFood + currentSuperfood + currentPoison + currentLightningfood + currentSmartfood) + " (" + currentFood + "/" + currentSuperfood + "/" + currentPoison + "/" + currentLightningfood + "/" + currentSmartfood + ")" , 0, 96);
   text("FPS: " + frameRate, 0, 128);
   text("Mode: " + mode, 0, 160);
   text("Simulations: " + simulations, 0, 192);
