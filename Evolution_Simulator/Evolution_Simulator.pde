@@ -50,6 +50,9 @@ int selectedMode = 0;
 //(simulation will restart when there are no creatures or eggs).
 int simulations = 0;
 
+//if you notice this ur mom gay lol
+long penisEnlargmentPills = 1000;
+
 //The time the simulation has been run.
 int seconds = 0;
 int minutes = 0;
