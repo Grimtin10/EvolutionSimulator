@@ -41,7 +41,8 @@ int selectedSmartFood;
 //The selected mode of editing.
 int selectedMode = 0;
 
-//The amount of selectedMode, goes up when everything goes extinct.
+//The amount of simulations, goes up when the simulation restarts
+//(simulation will restart when there are no creatures or eggs).
 int simulations = 0;
 
 //The time the simulation has been run.
@@ -153,7 +154,7 @@ void settings() {
     }
     creatures.add(new Creature(1.75, 10, startEnergy, 10, 0, 0, width/2, height/2, 15, 64, name, ""));
   }
-  //Adds in different foods (to change how much food ends up in the simulation change the startingfood).
+  //Adds in different foods (to change how much food ends up in the simulation change the startingfood variable).
   for(int i = 0; i < startingFood; i++){
     food.add(new Food(random(width), random(height)));
   }
@@ -217,6 +218,52 @@ void draw() {
   while(tempSize>populationLimit){
     creatures.remove(round(random(creatures.size()-1)));
     tempSize--;
+  }
+  if(creatures.size() == 0 && eggs.size() == 0){
+    for(int i = 0; i < creatures.size(); i++){
+      creatures.remove(i);
+    }
+    for(int i = 0; i < eggs.size(); i++){
+      eggs.remove(i);
+    }
+    for(int i = 0; i < food.size(); i++){
+      food.remove(i);
+    }
+    for(int i = 0; i < superfood.size(); i++){
+      superfood.remove(i);
+    }
+    for(int i = 0; i < poison.size(); i++){
+      poison.remove(i);
+    }
+    for(int i = 0; i < smartfood.size(); i++){
+      smartfood.remove(i);
+    }
+    for(int i = 0; i < startingPopulation; i++){
+    String name = "";
+    for(int j = 0; j < round(random(2, 5)); j ++){
+      int t = 0;
+      name += consonants[round(random(0, 20))];
+      name += vowels[round(random(0, 4))];
+      if(random(0, 1) < 0.25 && t < 3){
+        t++;
+        name += vowels[round(random(0, 4))];
+      }
+    }
+    creatures.add(new Creature(1.75, 10, startEnergy, 10, 0, 0, width/2, height/2, 15, 64, name, ""));
+    }
+    for(int i = 0; i < startingFood; i++){
+    food.add(new Food(random(width), random(height)));
+    }
+    for(int i = 0; i < startingFood/10; i++){
+      superfood.add(new Superfood(random(width), random(height)));
+    }
+    for(int i = 0; i < startingFood/18; i++){
+      poison.add(new Poison(random(width), random(height)));
+    }
+    for(int i = 0; i < startingFood/12; i++){
+      smartfood.add(new Smartfood(random(width), random(height), 128));
+    }
+    simulations++;
   }
   
   //Applies selectedMode to a String variable: "mode"
