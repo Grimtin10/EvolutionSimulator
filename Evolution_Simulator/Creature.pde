@@ -137,7 +137,7 @@ class Creature {
         newCarnivoreP += round(random(-1, 1));
       }
       newSpeed += random(-mutationAmount, mutationAmount);
-      newSpeed = (newSpeed < 0.5) ? 0.5 : newSpeed;
+      newSpeed = (newSpeed < 1.5) ? 1.5 : newSpeed;
       newSfColor += random(-32, 32);
       newSfColor = (newSfColor < 0) ? 0 : (newSfColor > 255) ? 255 : newSfColor;
       eggs.add(new Egg(newSpeed, (newkidEnergy <= 5) ? 5 : newkidEnergy, kidEnergy, eggTime, eggTime + round(random(-mutationAmount, mutationAmount)), (newCarnivoreP <= 0) ? 0 : newCarnivoreP, generation + 1, x, y, creatureSize + random(-5, 5), newSfColor, newName, name));
