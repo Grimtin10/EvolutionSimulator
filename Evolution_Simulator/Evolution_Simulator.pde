@@ -599,10 +599,10 @@ void keyPressed() {
       for(int i = 0; i < 10; i++){
         food.add(new Food(random(width), random(height)));
       }
-      for(int i =0; i < 2; i++){
+      for(int i = 0; i < 2; i++){
         superfood.add(new Superfood(random(width),random(height)));
       }
-      for(int i =0; i < 1; i++){
+      for(int i = 0; i < 1; i++){
         poison.add(new Poison(random(width),random(height)));
       }
     }  
