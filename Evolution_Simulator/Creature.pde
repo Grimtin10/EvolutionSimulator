@@ -188,6 +188,12 @@ class Creature {
       eatenPoison.get(i).x = (eatenPoison.get(i).x < 0) ? 0 : (eatenPoison.get(i).x > width) ? width: eatenPoison.get(i).x;
       eatenPoison.get(i).y = (eatenPoison.get(i).y < 0) ? 0 : (eatenPoison.get(i).y > height) ? height: eatenPoison.get(i).y;
     }
+    for(int i =0; i < eatenLightningfood.size(); i++){
+      eatenLightningfood.get(i).x = x + random(-50, 50);
+      eatenLightningfood.get(i).y = y + random(-50, 50);
+      eatenLightningfood.get(i).x = (eatenLightningfood.get(i).x < 0) ? 0 : (eatenLightningfood.get(i).x > width) ? width: eatenLightningfood.get(i).x;
+      eatenLightningfood.get(i).y = (eatenLightningfood.get(i).y < 0) ? 0 : (eatenLightningfood.get(i).y > height) ? height: eatenLightningfood.get(i).y;
+    }
     if(energy <= 0){
       for(int i = 0; i < eatenFood.size(); i++){
         eatenFood.get(i).eaten = false;
