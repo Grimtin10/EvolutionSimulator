@@ -32,12 +32,6 @@ int startingPoison = 125;
 int startingSmartfood = 125;
 int startingLightningfood = 500;
 
-//int startingFood = 0;
-//int startingSuperfood = 0;
-//int startingPoison = 0;
-//int startingSmartfood = 0;
-//int startingLightningfood = 4000;
-
 //The current amounts of each food.
 int currentFood; //Regular food, provides "foodEnergyAmount" amount of energy to the creatures that eat it.
 int currentSuperfood; //Superfood gives 5x the regular food amount.
