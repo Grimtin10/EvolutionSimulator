@@ -115,6 +115,18 @@ class Creature {
           poisonEaten++;
         }
       }
+      for(int i = 0; i < lightningfood.size(); i++){
+        if(!lightningfood.get(i).eaten && dist(x, y, lightningfood.get(i).x, lightningfood.get(i).y) < creatureSize/2+5){
+          lightningfood.get(i).x = random(width);
+          lightningfood.get(i).y = random(height);
+          energy += lightningfoodEnergyAmt;
+          currentSpeed += 2;
+          r += random(-45, 45);
+          lightningfood.get(i).eaten = true;
+          eatenLightningfood.add(lightningfood.get(i));
+          lightningfoodEaten++;
+        }
+      }
     } else {
       for(int i = 0; i < creatures.size(); i++){
         if(dist(x, y, creatures.get(i).x, creatures.get(i).y) < creatureSize/2+creatures.get(i).creatureSize && (x != creatures.get(i).x && y != creatures.get(i).y)){
@@ -127,18 +139,6 @@ class Creature {
         }
       }
     }
-    for(int i = 0; i < lightningfood.size(); i++){
-        if(!lightningfood.get(i).eaten && dist(x, y, lightningfood.get(i).x, lightningfood.get(i).y) < creatureSize/2+5){
-          lightningfood.get(i).x = random(width);
-          lightningfood.get(i).y = random(height);
-          energy += lightningfoodEnergyAmt;
-          currentSpeed += 2;
-          r += random(-45, 45);
-          lightningfood.get(i).eaten = true;
-          eatenLightningfood.add(lightningfood.get(i));
-          lightningfoodEaten++;
-        }
-      }
       
     //TODO: Add mutation rate settings instead of constants.
     if(energy >= kidEnergy + startEnergy) {

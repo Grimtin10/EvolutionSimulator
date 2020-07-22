@@ -30,7 +30,7 @@ int startingFood = 2000;
 int startingSuperfood = 500;
 int startingPoison = 125;
 int startingSmartfood = 125;
-int startingLightningfood = 500;
+int startingLightningfood = 300;
 
 //int startingFood = 0;
 //int startingSuperfood = 0;
@@ -42,8 +42,8 @@ int startingLightningfood = 500;
 int currentFood; //Regular food, provides "foodEnergyAmount" amount of energy to the creatures that eat it.
 int currentSuperfood; //Superfood gives 5x the regular food amount.
 int currentPoison; //Poison technically isnt a food, but it is classified as such.
-int currentSmartfood;//Smartfood is a food that can evolve, having a color that the creatures can have a preference towards.
-int currentLightningfood;//Lightningfood gives a temporary speed boost to the creature that consumes it.
+int currentSmartfood; //Smartfood is a food that can evolve, having a color that the creatures can have a preference towards.
+int currentLightningfood; //Lightningfood gives a temporary speed boost to the creature that consumes it.
 
 //The selected objects.
 int selectedCreature;
@@ -417,9 +417,9 @@ void draw() {
     float avgCarnSpeed=0;
     for(int i=0;i<creatures.size();i++){
       if(creatures.get(i).carnivoreParts < carnivorePartsNeeded){
-        avgHerbSpeed+=creatures.get(i).movementSpeed;
+        avgHerbSpeed+=creatures.get(i).currentSpeed;
       } else {
-        avgCarnSpeed+=creatures.get(i).movementSpeed;
+        avgCarnSpeed+=creatures.get(i).currentSpeed;
       }
     }
     avgHerbSpeed/=herbivorePopulation;
