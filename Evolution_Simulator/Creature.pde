@@ -122,6 +122,7 @@ class Creature {
       float newkidEnergy = kidEnergy;
       String newName = new String(name);
       float newSfColor = sfColor;
+      float newSpeed = movementSpeed;
       for(int i=0;i<newName.length();i++){
         if(random(0,1)<0.33333){
           if(i%2!=0){
@@ -135,15 +136,16 @@ class Creature {
       if(random(0, 100) <= carnivoreMutationRate){
         newCarnivoreP += round(random(-1, 1));
       }
+      newSpeed += random(-mutationAmount, mutationAmount);
+      newSpeed = (newSpeed < 0.5) ? 0.5 : newSpeed;
       newSfColor += random(-32, 32);
       newSfColor = (newSfColor < 0) ? 0 : (newSfColor > 255) ? 255 : newSfColor;
-      eggs.add(new Egg(movementSpeed + random(-mutationAmount, mutationAmount), (newkidEnergy <= 5) ? 5 : newkidEnergy, kidEnergy, eggTime, eggTime + round(random(-mutationAmount, mutationAmount)), (newCarnivoreP <= 0) ? 0 : newCarnivoreP, generation + 1, x, y, creatureSize + random(-5, 5), newSfColor, newName, name));
+      eggs.add(new Egg(newSpeed, (newkidEnergy <= 5) ? 5 : newkidEnergy, kidEnergy, eggTime, eggTime + round(random(-mutationAmount, mutationAmount)), (newCarnivoreP <= 0) ? 0 : newCarnivoreP, generation + 1, x, y, creatureSize + random(-5, 5), newSfColor, newName, name));
       energy -= kidEnergy; 
       kids++;
     }
     energy -= energyLoss * creatureSize/15 + (abs(movementSpeed / 3)*energyLoss); 
       
-    //TODO: Clean this shit up! How? Idk man, it's just ugly.
     for(int i =0; i < eatenFood.size(); i++){
       eatenFood.get(i).x = x + random(-50, 50);
       eatenFood.get(i).y = y + random(-50, 50);
