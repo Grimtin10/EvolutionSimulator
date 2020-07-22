@@ -3,10 +3,10 @@ class Creature {
   int kids;
   int carnivoreParts;
   int eggTime;
-  int foodEaten, superfoodEaten, poisonEaten, smartfoodEaten, creaturesEaten; 
+  int foodEaten, superfoodEaten, poisonEaten, smartfoodEaten, lightningfoodEaten, creaturesEaten; 
   int age = 0;
   float sfColor;
-  float x, y, r, movementSpeed, kidEnergy, energy;
+  float x, y, r, movementSpeed, currentSpeed, kidEnergy, energy;
   float creatureSize;
   String name;
   String parentName;
@@ -17,10 +17,13 @@ class Creature {
   ArrayList<Superfood> eatenSuperfood = new ArrayList<Superfood>();
   ArrayList<Poison> eatenPoison = new ArrayList<Poison>();
   ArrayList<Smartfood> eatenSmartfood = new ArrayList<Smartfood>();
+  ArrayList<Lightningfood> eatenLightningfood = new ArrayList<Lightningfood>();
+
   
   public Creature(float movementSpeed, float kidEnergy, float energy, int eggTime, int carnivoreParts, int generation, float x,
   float y, float creatureSize, float sfColor, String name, String parentName){
     this.movementSpeed = movementSpeed;
+    this.currentSpeed = movementSpeed;
     this.kidEnergy = kidEnergy;
     this.carnivoreParts = carnivoreParts;
     this.eggTime = eggTime;
@@ -37,14 +40,22 @@ class Creature {
   
   public void update(int id){
     
-    x += cos(radians(r)) * movementSpeed;
-    y += sin(radians(r)) * movementSpeed;
+    x += cos(radians(r)) * currentSpeed;
+    y += sin(radians(r)) * currentSpeed;
     x = (x < creatureSize/2) ? creatureSize/2 : (x > width - creatureSize + creatureSize/2) ? width - creatureSize + creatureSize/2 : x;
     y = (y < creatureSize/2) ? creatureSize/2 : (y > height - creatureSize + creatureSize/2) ? height - creatureSize + creatureSize/2 : y;
      
     if(frameCount % round(frameRate) == 0){
       age++;
     }
+    
+    if(currentSpeed > movementSpeed){
+      currentSpeed -= 0.01;
+    }
+    if(currentSpeed < movementSpeed){
+      currentSpeed = movementSpeed;
+    }
+    
     if(x == creatureSize/2) {r += random(140, 180);} if(y == creatureSize/2) {r += random(140, 180);} if(x == width - creatureSize + creatureSize/2) {r += random(140, 180);} if(y == height - creatureSize + creatureSize/2) {r += random(140, 180);}
     
     //TODO: This shit is inefficient! Add optimization.
@@ -116,6 +127,19 @@ class Creature {
         }
       }
     }
+    for(int i = 0; i < lightningfood.size(); i++){
+        if(!lightningfood.get(i).eaten && dist(x, y, lightningfood.get(i).x, lightningfood.get(i).y) < creatureSize/2+5){
+          lightningfood.get(i).x = random(width);
+          lightningfood.get(i).y = random(height);
+          energy += lightningfoodEnergyAmt;
+          currentSpeed += 2;
+          r += random(-45, 45);
+          lightningfood.get(i).eaten = true;
+          eatenLightningfood.add(lightningfood.get(i));
+          lightningfoodEaten++;
+        }
+      }
+      
     //TODO: Add mutation rate settings instead of constants.
     if(energy >= kidEnergy + startEnergy) {
       int newCarnivoreP = carnivoreParts;
