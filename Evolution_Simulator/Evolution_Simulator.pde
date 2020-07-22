@@ -290,13 +290,12 @@ void draw() {
     if(seconds == 60){
       minutes++;
       seconds = 0;
-      }
     }  
     if(minutes == 60){
       hours++;
       minutes = 0;
     }
-    
+  }
   if(!pause&&frameCount%(round(frameRate)/2)==0){
     populationGraph.add((float)herbivorePopulation+carnivorePopulation);
     if(populationGraph.size()>500){
