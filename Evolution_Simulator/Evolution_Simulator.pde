@@ -222,7 +222,7 @@ void draw() {
   
   //Runs update and render code on the creatures
   for(int i = 0; i < creatures.size(); i++){
-    if(!pause){
+    if(!pause && creatures.get(i)!=null){
       creatures.get(i).update(i);
     }
     creatures.get(i).render();
