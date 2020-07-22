@@ -203,6 +203,9 @@ class Creature {
       }
       for(int i = 0; i < eatenPoison.size(); i++){
         eatenPoison.get(i).eaten = false;
+      }    
+      for(int i = 0; i < eatenLightningfood.size(); i++){
+        eatenLightningfood.get(i).eaten = false;
       }     
       if(id<selectedCreature){
         selectedCreature--;
