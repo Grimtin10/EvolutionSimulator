@@ -129,7 +129,7 @@ class Creature {
       }
     } else {
       for(int i = 0; i < creatures.size(); i++){
-        if(dist(x, y, creatures.get(i).x, creatures.get(i).y) < creatureSize/2+creatures.get(i).creatureSize && (x != creatures.get(i).x && y != creatures.get(i).y)){
+        if(creatures.get(i)!=null&&dist(x, y, creatures.get(i).x, creatures.get(i).y) < creatureSize/2+creatures.get(i).creatureSize && (x != creatures.get(i).x && y != creatures.get(i).y)){
           if(creatures.get(i).carnivoreParts < carnivorePartsNeeded && random(0,1) > map(creatures.get(i).carnivoreParts, 0, carnivorePartsNeeded, 0, 1)){
             creatures.get(i).energy = 0;
             energy += foodEnergyAmt;
