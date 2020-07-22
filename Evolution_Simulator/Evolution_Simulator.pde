@@ -153,8 +153,7 @@ void settings() {
     }
     creatures.add(new Creature(1.75, 10, startEnergy, 10, 0, 0, width/2, height/2, 15, 64, name, ""));
   }
-  //Adds in different foods (to change how much food ends up in 
-  //the simulation change the startingfood).
+  //Adds in different foods (to change how much food ends up in the simulation change the startingfood).
   for(int i = 0; i < startingFood; i++){
     food.add(new Food(random(width), random(height)));
   }
@@ -173,7 +172,7 @@ void draw() {
   //Determines color of the background.
   background(0);
   
-  //Sets the current amount of each food to 0.
+  //Sets the food counters to 0.
   currentFood = 0;
   currentSuperfood = 0;
   currentPoison = 0;
@@ -201,7 +200,7 @@ void draw() {
     eggs.get(i).render();
   }
   
-  //runs update and render code on the creatures
+  //Runs update and render code on the creatures
   for(int i = 0; i < creatures.size(); i++){
     if(!pause){
       creatures.get(i).update(i);
@@ -272,7 +271,7 @@ void draw() {
     text("Smartfood Color: " + (smartfood.get(selectedSmartFood).sfColor), 0, 256);
   }
   
-  //shows basic stats
+  //Shows basic stats
   fill(200, 200, 255);
   textSize(32);
   text("Population: " + creatures.size() + " (" + herbivorePopulation + "/" + carnivorePopulation + ")", 0, 32);
