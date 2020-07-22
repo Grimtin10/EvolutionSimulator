@@ -25,17 +25,18 @@ int herbivorePopulation;
 int carnivorePopulation;
 
 //The starting food of the simulation.
-//int startingFood = 2000; //Defaults
-//int startingSuperfood = 500;
-//int startingPoison = 125;
-//int startingSmartfood = 125;
-//int startingLightningfood = 500;
+//Defaults
+int startingFood = 2000; 
+int startingSuperfood = 500;
+int startingPoison = 125;
+int startingSmartfood = 125;
+int startingLightningfood = 500;
 
-int startingFood = 0;
-int startingSuperfood = 0;
-int startingPoison = 0;
-int startingSmartfood = 0;
-int startingLightningfood = 4000;
+//int startingFood = 0;
+//int startingSuperfood = 0;
+//int startingPoison = 0;
+//int startingSmartfood = 0;
+//int startingLightningfood = 4000;
 
 //The current amounts of each food.
 int currentFood; //Regular food, provides "foodEnergyAmount" amount of energy to the creatures that eat it.
@@ -314,7 +315,7 @@ void draw() {
     text("Generation: " + creatures.get(selectedCreature).generation/2, 0, 256);
     text("Energy: " + creatures.get(selectedCreature).energy, 0, 288);
     text("Energy Loss: " + "-" + energyLoss, 0, 320);
-    text("Speed(pixels per frame): " + creatures.get(selectedCreature).movementSpeed, 0, 352);
+    text("Speed(pixels per frame): " + creatures.get(selectedCreature).currentSpeed, 0, 352);
     text("Kid Energy: " + creatures.get(selectedCreature).kidEnergy + " + " + startEnergy, 0, 384);
     text("Egg Hatch Time: " + creatures.get(selectedCreature).eggTime, 0, 416);
     text("Kids Had: " + creatures.get(selectedCreature).kids, 0, 448);
