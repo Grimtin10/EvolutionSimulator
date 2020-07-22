@@ -31,7 +31,8 @@ int startingFood = 2000;
 int currentFood; //Regular food, provides "foodEnergyAmount" amount of energy to the creatures that eat it.
 int currentSuperfood; //Superfood gives 10x the regular food amount.
 int currentPoison; //Poison technically isnt a food, but it is classified as such.
-int currentSmartfood; //Smartfood is a food that can evolve, having a color that the creatures can have a preference towards.
+int currentSmartfood;//Smartfood is a food that can evolve, having a color that the creatures can have a preference towards.
+int currentLightningfood;//Lightningfood gives a temporary speed boost;
 
 //The selected objects.
 int selectedCreature;
