@@ -100,6 +100,13 @@ ArrayList<Creature> creatures = new ArrayList<Creature>(); //The alive creatures
 ArrayList<Egg> eggs = new ArrayList<Egg>(); //The creature's eggs.
 
 //The different types of food that are in the simulation.
+ArrayList<ArrayList<ArrayList<Food>>> cFood = new ArrayList<ArrayList<ArrayList<Food>>>();
+ArrayList<ArrayList<ArrayList<Superfood>>> cSuperfood = new ArrayList<ArrayList<ArrayList<Superfood>>>();
+ArrayList<ArrayList<ArrayList<Poison>>> cPoison = new ArrayList<ArrayList<ArrayList<Poison>>>();
+ArrayList<ArrayList<ArrayList<Smartfood>>> cSmartfood = new ArrayList<ArrayList<ArrayList<Smartfood>>>();
+ArrayList<ArrayList<ArrayList<Lightningfood>>> cLightningfood = new ArrayList<ArrayList<ArrayList<Lightningfood>>>();
+
+//The non-collision optimized variants of the food arrays.
 ArrayList<Food> food = new ArrayList<Food>();
 ArrayList<Superfood> superfood = new ArrayList<Superfood>();
 ArrayList<Poison> poison = new ArrayList<Poison>();
@@ -166,26 +173,20 @@ void settings() {
     }
     creatures.add(new Creature(1.75, 10, startEnergy, 10, 0, 0, width/2, height/2, 15, 64, name, ""));
   }
+  
   //Adds in different foods (to change how much food ends up in the simulation change the startingfood variable).
-  for(int i = 0; i < startingFood; i++){
-    food.add(new Food(random(width), random(height)));
-  }
-  for(int i = 0; i < startingSuperfood; i++){
-    superfood.add(new Superfood(random(width), random(height)));
-  }
-  for(int i = 0; i < startingPoison; i++){
-    poison.add(new Poison(random(width), random(height)));
-  }
-  for(int i = 0; i < startingSmartfood; i++){
-    smartfood.add(new Smartfood(random(width), random(height), 128));
-  }
-  for(int i = 0; i < startingLightningfood; i++){
-    lightningfood.add(new Lightningfood(random(width), random(height)));
-  }
+  initFood();
+  
+  //Put the foods into their respective non-collision optimized arraylists.
+  food = getFood();
+  superfood = getSuperfood();
+  poison = getPoison();
+  smartfood = getSmartfood();
+  lightningfood = getLightningfood();
 }
 
 void draw() {
-  //Determines color of the background.
+  //Clears the screen and determines color of the background.
   background(0);
   
   //Sets the food counters to 0.
@@ -270,18 +271,7 @@ void draw() {
     }
     creatures.add(new Creature(1.75, 10, startEnergy, 10, 0, 0, width/2, height/2, 15, 64, name, ""));
     }
-    for(int i = 0; i < startingFood; i++){
-    food.add(new Food(random(width), random(height)));
-    }
-    for(int i = 0; i < startingFood/10; i++){
-      superfood.add(new Superfood(random(width), random(height)));
-    }
-    for(int i = 0; i < startingFood/18; i++){
-      poison.add(new Poison(random(width), random(height)));
-    }
-    for(int i = 0; i < startingFood/12; i++){
-      smartfood.add(new Smartfood(random(width), random(height), 128));
-    }
+    initFood();
     simulations++;
   }
   
@@ -331,7 +321,7 @@ void draw() {
   }
   
   //Shows smartfood color of a specific selected smartfood
-  if(smartfood.size() > 0 && selectedSmartFood < smartfood.size() && smartfood.get(selectedSmartFood) != null && sfSelected){
+  if(smartfood.get(selectedSmartFood) != null && sfSelected){
     smartfood.get(selectedSmartFood).selected = true;
     fill(255, 120, 25);
     text("Smartfood Color: " + (smartfood.get(selectedSmartFood).sfColor), 0, 256);
@@ -389,8 +379,8 @@ void draw() {
       ageGraph.remove(0);
     }
     float avgSmartfoodColor=0;
-    for(int i=0;i<smartfood.size();i++){
-      avgSmartfoodColor+=smartfood.get(i).sfColor;
+    for(int i=0;i<getSmartfood().size();i++){
+      avgSmartfoodColor+=getSmartfood().get(i).sfColor;
     }
     avgSmartfoodColor/=smartfood.size();
     smartfoodColorGraph.add(avgSmartfoodColor);
@@ -613,30 +603,34 @@ void keyPressed() {
   if(key == ' '){
     pause = !pause;
   }
-  if(mode == "Food Edit"){
-    if(key == 'w' || key == 'W'){
-      for(int i = 0; i < 10; i++){
-        food.add(new Food(random(width), random(height)));
-      }
-      for(int i = 0; i < 2; i++){
-        superfood.add(new Superfood(random(width),random(height)));
-      }
-      for(int i = 0; i < 1; i++){
-        poison.add(new Poison(random(width),random(height)));
-      }
-    }  
-    if((key == 's' || key == 'S') && food.size() > 0){
-      for(int i = 0; i < 10; i++){
-        food.remove(0);  
-      }
-      for(int i = 0; i < 2; i++){
-        superfood.remove(0);  
-      }
-      for(int i = 0; i < 1; i++){
-        poison.remove(0);  
-      }
-    }
-  }
+  
+  //TODO: make this work because i really cant be bothered
+  //please
+  
+  //if(mode == "Food Edit"){
+  //  if(key == 'w' || key == 'W'){
+  //    for(int i = 0; i < 10; i++){
+  //      food.add(new Food(random(width), random(height)));
+  //    }
+  //    for(int i = 0; i < 2; i++){
+  //      superfood.add(new Superfood(random(width),random(height)));
+  //    }
+  //    for(int i = 0; i < 1; i++){
+  //      poison.add(new Poison(random(width),random(height)));
+  //    }
+  //  }  
+  //  if((key == 's' || key == 'S') && food.size() > 0){
+  //    for(int i = 0; i < 10; i++){
+  //      food.remove(0);  
+  //    }
+  //    for(int i = 0; i < 2; i++){
+  //      superfood.remove(0);  
+  //    }
+  //    for(int i = 0; i < 1; i++){
+  //      poison.remove(0);  
+  //    }
+  //  }
+  //}
   if(mode == "Food Energy Edit"){
     if(key == 'w'|| key == 'W'){
       foodEnergyAmt++;
@@ -668,5 +662,148 @@ void keyPressed() {
     if((key == 's' || key == 'S') && energyLoss > 0){
       energyLoss -= 0.01; 
     }
+  }
+}
+
+ArrayList<Food> getFood(){
+  ArrayList<Food> temp = new ArrayList<Food>();
+  for(int x=0;x<cFood.size();x++){
+    for(int y=0;y<cFood.get(x).size();y++){
+      for(int i=0;i<cFood.get(x).get(y).size();i++){
+        temp.add(cFood.get(x).get(y).get(i));
+      }
+    }
+  }
+  return temp;
+}
+
+ArrayList<Superfood> getSuperfood(){
+  ArrayList<Superfood> temp = new ArrayList<Superfood>();
+  for(int x=0;x<cSuperfood.size();x++){
+    for(int y=0;y<cSuperfood.get(x).size();y++){
+      for(int i=0;i<cSuperfood.get(x).get(y).size();i++){
+        temp.add(cSuperfood.get(x).get(y).get(i));
+      }
+    }
+  }
+  return temp;
+}
+
+ArrayList<Poison> getPoison(){
+  ArrayList<Poison> temp = new ArrayList<Poison>();
+  for(int x=0;x<cPoison.size();x++){
+    for(int y=0;y<cPoison.get(x).size();y++){
+      for(int i=0;i<cPoison.get(x).get(y).size();i++){
+        temp.add(cPoison.get(x).get(y).get(i));
+      }
+    }
+  }
+  return temp;
+}
+
+ArrayList<Smartfood> getSmartfood(){
+  ArrayList<Smartfood> temp = new ArrayList<Smartfood>();
+  for(int x=0;x<cSmartfood.size();x++){
+    for(int y=0;y<cSmartfood.get(x).size();y++){
+      for(int i=0;i<cSmartfood.get(x).get(y).size();i++){
+        temp.add(cSmartfood.get(x).get(y).get(i));
+      }
+    }
+  }
+  return temp;
+}
+
+ArrayList<Lightningfood> getLightningfood(){
+  ArrayList<Lightningfood> temp = new ArrayList<Lightningfood>();
+  for(int x=0;x<cLightningfood.size();x++){
+    for(int y=0;y<cLightningfood.get(x).size();y++){
+      for(int i=0;i<cLightningfood.get(x).get(y).size();i++){
+        temp.add(cLightningfood.get(x).get(y).get(i));
+      }
+    }
+  }
+  return temp;
+}
+
+void initFood(){
+  ArrayList<Food> tempFood = new ArrayList<Food>();
+  ArrayList<Superfood> tempSuperfood = new ArrayList<Superfood>();
+  ArrayList<Poison> tempPoison = new ArrayList<Poison>();
+  ArrayList<Smartfood> tempSmartfood = new ArrayList<Smartfood>();
+  ArrayList<Lightningfood> tempLightningfood = new ArrayList<Lightningfood>();
+  for(int i = 0; i < startingFood; i++){
+    tempFood.add(new Food(random(width), random(height)));
+  }
+  for(int i = 0; i < startingSuperfood; i++){
+    tempSuperfood.add(new Superfood(random(width), random(height)));
+  }
+  for(int i = 0; i < startingPoison; i++){
+    tempPoison.add(new Poison(random(width), random(height)));
+  }
+  for(int i = 0; i < startingSmartfood; i++){
+    tempSmartfood.add(new Smartfood(random(width), random(height), 128));
+  }
+  for(int i = 0; i < startingLightningfood; i++){
+    tempLightningfood.add(new Lightningfood(random(width), random(height)));
+  }
+  for(int x=0;x<9;x++){
+    ArrayList<ArrayList<Food>> temp = new ArrayList<ArrayList<Food>>();
+    for(int y=0;y<5;y++){
+      temp.add(new ArrayList<Food>());
+    }
+    cFood.add(temp);
+  }
+  for(int i=0;i<tempFood.size();i++){
+    int x=int(tempFood.get(i).x/(width/8));
+    int y=int(tempFood.get(i).y/(height/4));
+    cFood.get(x).get(y).add(tempFood.get(i));
+  }
+  for(int x=0;x<9;x++){
+    ArrayList<ArrayList<Superfood>> temp = new ArrayList<ArrayList<Superfood>>();
+    for(int y=0;y<5;y++){
+      temp.add(new ArrayList<Superfood>());
+    }
+    cSuperfood.add(temp);
+  }
+  for(int i=0;i<tempSuperfood.size();i++){
+    int x=int(tempSuperfood.get(i).x/(width/8));
+    int y=int(tempSuperfood.get(i).y/(height/4));
+    cSuperfood.get(x).get(y).add(tempSuperfood.get(i));
+  }
+  for(int x=0;x<9;x++){
+    ArrayList<ArrayList<Poison>> temp = new ArrayList<ArrayList<Poison>>();
+    for(int y=0;y<5;y++){
+      temp.add(new ArrayList<Poison>());
+    }
+    cPoison.add(temp);
+  }
+  for(int i=0;i<tempPoison.size();i++){
+    int x=int(tempPoison.get(i).x/(width/8));
+    int y=int(tempPoison.get(i).y/(height/4));
+    cPoison.get(x).get(y).add(tempPoison.get(i));
+  }
+  for(int x=0;x<9;x++){
+    ArrayList<ArrayList<Smartfood>> temp = new ArrayList<ArrayList<Smartfood>>();
+    for(int y=0;y<5;y++){
+      temp.add(new ArrayList<Smartfood>());
+    }
+    cSmartfood.add(temp);
+  }
+  for(int i=0;i<tempSmartfood.size();i++){
+    int x=int(tempSmartfood.get(i).x/(width/8));
+    int y=int(tempSmartfood.get(i).y/(height/4));
+    cSmartfood.get(x).get(y).add(tempSmartfood.get(i));
+  }
+  for(int x=0;x<9;x++){
+    ArrayList<ArrayList<Lightningfood>> temp = new ArrayList<ArrayList<Lightningfood>>();
+    for(int y=0;y<5;y++){
+      temp.add(new ArrayList<Lightningfood>());
+    }
+    cLightningfood.add(temp);
+  }
+  for(int i=0;i<tempLightningfood.size();i++){
+    int x=int(tempLightningfood.get(i).x/(width/8));
+    int y=int(tempLightningfood.get(i).y/(height/4));
+    cLightningfood.get(x).get(y).add(tempLightningfood.get(i));
   }
 }

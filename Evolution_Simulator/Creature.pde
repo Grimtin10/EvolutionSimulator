@@ -6,7 +6,7 @@ class Creature {
   int foodEaten, superfoodEaten, poisonEaten, smartfoodEaten, lightningfoodEaten, creaturesEaten; 
   int age = 0;
   float sfColor;
-  float x, y, r, movementSpeed, currentSpeed, kidEnergy, energy;
+  float x, y, pX, pY, r, movementSpeed, currentSpeed, kidEnergy, energy;
   float creatureSize;
   String name;
   String parentName;
@@ -39,7 +39,8 @@ class Creature {
   }
   
   public void update(int id){
-    
+    pX = x;
+    pY = y;
     x += cos(radians(r)) * currentSpeed;
     y += sin(radians(r)) * currentSpeed;
     x = (x < creatureSize/2) ? creatureSize/2 : (x > width - creatureSize + creatureSize/2) ? width - creatureSize + creatureSize/2 : x;
@@ -225,6 +226,7 @@ class Creature {
     } else {
       herbivorePopulation++;
     }    
+
     if(selected){
       strokeWeight(5);
       stroke(0, 0, 255);
@@ -234,5 +236,9 @@ class Creature {
     }
     fill(lerpColor(color(255), color(255, 0, 0), map(carnivoreParts, 0, carnivorePartsNeeded, 0 ,1)));
     ellipse(x, y, creatureSize, creatureSize);
+  }
+  
+  public boolean foodCollision(){
+    return false;
   }
 }
