@@ -50,7 +50,7 @@ class Creature {
     }
     
     if(currentSpeed > movementSpeed){
-      currentSpeed -= 0.01;
+      currentSpeed -= 0.06;
     }
     if(currentSpeed < movementSpeed){
       currentSpeed = movementSpeed;
